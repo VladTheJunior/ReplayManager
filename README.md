@@ -17,7 +17,7 @@
 
 **Developer:** VladTheJunior<br />
 **Current version:** 0.0.1<br />
-[Download Portable (.zip archive)](https://github.com/VladTheJunior/Resource-Manager/releases/latest/download/ReplayManager.zip)<br />
+[Download Portable (.zip archive)](https://github.com/VladTheJunior/ReplayManager/releases/latest/download/ReplayManager.zip)<br />
 
 ## Table of Contents
 
