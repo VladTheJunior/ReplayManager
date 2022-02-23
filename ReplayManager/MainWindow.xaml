@@ -540,12 +540,13 @@
 
                     <Image Grid.Column="0" Grid.Row="0"  Width="64" Height="64" Margin="0,0,20,0" Source="pack://application:,,,/game-age3.ico"/>
 
-                    
 
-                    <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Left" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                
+ 
+                        <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Left" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                   <Hyperlink NavigateUri="https://github.com/VladTheJunior/ReplayManager" RequestNavigate="Hyperlink_RequestNavigate">
+
                 <Run Text="Replay Manager" FontSize="22"/>
-                
+                </Hyperlink>
                 <LineBreak/>
                 <Run Text="Copyright (c) 2019-2022 VladTheJunior"  FontSize="14"/>
 
@@ -601,7 +602,7 @@
             </TabItem>
         </TabControl>
 
-        <Grid x:Name="gDrapDrop" Background="#ffffff" Visibility="Collapsed">
+        <Grid x:Name="gDrapDrop" Background="#ffffff">
             <Border BorderThickness="5" Padding="40" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Border.BorderBrush>
                     <VisualBrush>
