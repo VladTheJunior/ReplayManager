@@ -1,0 +1,633 @@
+﻿<Window x:Class="ReplayManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:local="clr-namespace:ReplayManager"
+        mc:Ignorable="d"
+        AllowDrop="True"
+            FontFamily="{StaticResource Trajan Pro}"
+    FontSize="14"
+        ResizeMode="CanMinimize"
+            UseLayoutRounding="True"
+    WindowStartupLocation="CenterScreen"
+        Title="{Binding RecordPathFileName, StringFormat='{}Replay Manager - {0}', TargetNullValue='Replay Manager', FallbackValue='Replay Manager'}" Height="660" Width="1210" DragEnter="Window_DragEnter" DragLeave="Window_DragLeave" Drop="Window_Drop" DragOver="Window_DragOver">
+    <Window.Resources>
+        <local:StringToColorConverter x:Key="StringToColorConverter" />
+        <local:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
+        <local:AmountToVisibilityConverter x:Key="AmountToVisibilityConverter" />
+    </Window.Resources>
+    
+    <Grid>
+        <TabControl HorizontalContentAlignment="Left" TabStripPlacement="Left" SelectedIndex="0">
+            <TabItem  Width="190" Padding="10,5">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="40" Height="23" Source="/data/ui/icon_game_summary.png" HorizontalAlignment="Left" />
+                        <TextBlock VerticalAlignment="Center" Text="General"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" >
+                            <Run FontSize="18" Text="{Binding record.GameTitle, FallbackValue='Unknown Game Title', TargetNullValue='Unknown Game Title'}"/>
+                            <Run  FontSize="16" Text="{Binding record.RecordOwner.name, StringFormat='{}recorded by {0}', FallbackValue='record by unknown'}" TextDecorations="Underline"/>
+                        </TextBlock>
+                        <TextBlock Grid.Row="2" Text="{Binding record.Rules, FallbackValue='Unknown Game Rules'}">
+                            
+                        </TextBlock> 
+                        <TextBlock Grid.Row="1">
+                        <Run Text="{Binding record.ExeVersion, Mode=OneWay, StringFormat='{}Definitive Edition - version {0}', FallbackValue='Definitive Edition - Unknown Version'}"/>
+                        <Run Text="("/>
+                        <Hyperlink NavigateUri="{Binding record.GameVersion.PatchNotes, Mode=OneWay}" RequestNavigate="Hyperlink_RequestNavigate">
+                            <Run Text="{Binding record.GameVersion.PatchVersion, Mode=OneWay, StringFormat='{}Patch {0}', FallbackValue='Unknown Patch'}"/>
+                        </Hyperlink>
+                        <Run Text=")"/>
+
+                        </TextBlock>
+                        <ListView
+            Grid.Row="3"
+                        Margin="0,5,5,5"
+                      Grid.RowSpan="7"
+            ItemsSource="{Binding record.Players}"
+            ScrollViewer.VerticalScrollBarVisibility="Visible"
+            VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+            VirtualizingPanel.ScrollUnit="Pixel">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="BorderThickness" Value="0" />
+                                    <Setter Property="Margin" Value="0 5" />
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                <Border
+                         BorderBrush="Transparent"
+                         BorderThickness="0"
+                         Background="{TemplateBinding Background}">
+                                                    <GridViewRowPresenter HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Width="Auto" Margin="0" Content="{TemplateBinding Content}"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+
+
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(ItemsControl.AlternationIndex)}" Value="0" />
+                                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="False" />
+                                                <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="False" />
+
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.Setters>
+                                                <Setter Property="Background" Value="#00000000" />
+                                            </MultiDataTrigger.Setters>
+
+
+                                        </MultiDataTrigger>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="False">
+                                    <GridViewColumn>
+                                        <GridViewColumn.Header>
+                                            <GridViewColumnHeader Content="Color"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Border  BorderBrush="Black" BorderThickness="1" Width="24" Height="24" Background="{Binding Path=hexcolor, Converter={StaticResource StringToColorConverter}}">
+                                                    <TextBlock
+                                    Text="{Binding Path=id}"
+                                    TextAlignment="Center"
+                                                    Foreground="White"
+                                                    VerticalAlignment="Center">
+                                                        <TextBlock.Effect>
+                                                            <DropShadowEffect BlurRadius="1"  ShadowDepth="2"/>
+                                                        </TextBlock.Effect>
+                                                    </TextBlock>
+                                                </Border>
+
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn>
+                                        <GridViewColumn.Header>
+                                            <GridViewColumnHeader Content="Avatar"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Image Height="50" Source="{Binding Path=Avatar, FallbackValue='pack://application:,,,/data/avatars/avatar_tier0_Starter_01.png'}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn>
+                                        <GridViewColumn.Header>
+                                            <GridViewColumnHeader Content="Player Name"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock
+                                    Text="{Binding Path=name}"
+                                    TextAlignment="Left" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn>
+                                        <GridViewColumn.Header>
+                                            <GridViewColumnHeader Content="Clan"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock
+                                    Text="{Binding Path=clan}"
+                                    TextAlignment="Left" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn>
+                                        <GridViewColumn.Header>
+                                            <GridViewColumnHeader Content="Team"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock
+                                    Text="{Binding Path=Team}"
+                                    TextAlignment="Left" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn>
+                                        <GridViewColumn.Header>
+                                            <GridViewColumnHeader Content="Civ"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                             
+                                                <Image ToolTip="{Binding Path=GameCiv.name, FallbackValue='Unknown'}"  Height="50" Source="{Binding Path=GameCiv.icon, FallbackValue='pack://application:,,,/data/flags/Flag_Random.png'}"/>
+                   
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn>
+                                        <GridViewColumn.Header>
+                                            <GridViewColumnHeader Content="Type"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock
+                                    Text="{Binding Path=Type}"
+                                    TextAlignment="Left" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn>
+                                        <GridViewColumn.Header>
+                                            <GridViewColumnHeader Content="Handicap"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock
+                                    Text="{Binding Path=Handicap}"
+                                    TextAlignment="Left" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <ComboBox IsEnabled="False" IsEditable="True" Width="256" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding record.GameNumPlayers, StringFormat='{}{0} Players', FallbackValue='Unknown Players'}" />
+                        <Image Height="192" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Source="{Binding record.MapIcon, FallbackValue='pack://application:,,,/data/maps/unknown_mini.png'}"/>
+                        <CheckBox Margin="12,0" Grid.Row="2" Grid.Column="1" Content="Large Map" IsEnabled="False" IsChecked="{Binding record.MapSize, Mode=OneWay, FallbackValue='False'}"/>
+                        <Button IsEnabled="False" Margin="0,5" Width="256" Height="32" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Content="{Binding record.GameFileName, FallbackValue='Unknown Map'}"/>
+
+                        <Grid Grid.Row="4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Text="Starting Age" />
+                            <ComboBox Margin="0,5" IsEnabled="False" IsEditable="True" Width="128" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding record.StartingAge, Mode=OneWay}" />
+                            <TextBlock VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Text="Ending Age" />
+                            <ComboBox Margin="0,5" IsEnabled="False" IsEditable="True" Width="128" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding record.EndingAge, Mode=OneWay}" />
+                            <TextBlock VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Text="Difficulty" />
+                            <ComboBox Margin="0,5" IsEnabled="False" IsEditable="True" Width="128" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding record.Difficulty, Mode=OneWay}" />
+                            <TextBlock VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Text="Starting Resources" />
+                            <ComboBox Margin="0,5" IsEnabled="False" IsEditable="True" Width="128" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding record.StartingResources, Mode=OneWay}" />
+                            <TextBlock VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" Text="Game Speed" />
+                            <ComboBox Margin="0,5" IsEnabled="False" IsEditable="True" Width="128" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding record.Speed, Mode=OneWay}" />
+                            <TextBlock VerticalAlignment="Center" Grid.Row="5" Grid.Column="0" Text="Password" />
+                            <TextBox Margin="0,5" Height="22" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Width="128" IsReadOnly="True" Text="{Binding record.GamePassword}"/>
+
+                        </Grid>
+                        
+                        <CheckBox Margin="0,5" Grid.Row="5" Content="Free For All" IsEnabled="False" IsChecked="{Binding record.GameFFA, Mode=OneWay, FallbackValue='False'}"/>
+                        <CheckBox Margin="0,5" Grid.Row="6" Content="Record Game" IsEnabled="False" IsChecked="{Binding record.GameRecordGame, Mode=OneWay, FallbackValue='False'}"/>
+                        <CheckBox Margin="0,5" Grid.Row="7" Content="Handicap" IsEnabled="False" IsChecked="{Binding record.Handicap, Mode=OneWay, FallbackValue='False'}"/>
+                        <CheckBox Margin="0,5" Grid.Row="8" Content="Allow Cheats" IsEnabled="False" IsChecked="{Binding record.GameAllowCheats, Mode=OneWay, FallbackValue='False'}"/>
+           
+                    </Grid>
+      
+                </Grid>
+            </TabItem>
+            <TabItem  Width="190" Padding="10,5">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="40" Height="23" Source="/data/ui/objective_checkbox_empty.png" HorizontalAlignment="Left" />
+                        <TextBlock VerticalAlignment="Center" Text="Decks"/>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <TabControl  Grid.ColumnSpan="2"  SelectedIndex="0" ItemsSource="{Binding record.Players}">
+                        <TabControl.ItemTemplate>
+                            <DataTemplate>
+                            <TextBlock VerticalAlignment="Center">
+                                <Image Height="24" Source="{Binding Path=Avatar, FallbackValue='pack://application:,,,/data/avatars/avatar_tier0_Starter_01.png'}"/>
+                                <Run BaselineAlignment="Center" Text="{Binding Path=name}"/>
+                                <Image ToolTip="{Binding Path=GameCiv.name, FallbackValue='Unknown'}"  Height="24" Source="{Binding Path=GameCiv.icon, FallbackValue='pack://application:,,,/data/flags/Flag_Random.png'}"/>
+                            </TextBlock>
+                                
+                            </DataTemplate>
+                        </TabControl.ItemTemplate>
+                        <TabControl.ContentTemplate>
+                            <DataTemplate>
+
+                            <TabControl TabStripPlacement="Left"  SelectedIndex="0" ItemsSource="{Binding Path=Decks}">
+                                    <TabControl.ItemTemplate>
+                                        <DataTemplate>
+                                        <TextBlock Width="190" Padding="3,5" Text="{Binding Path=Name}"/>
+                                        </DataTemplate>
+                                    </TabControl.ItemTemplate>
+                                    <TabControl.ContentTemplate>
+                                        <DataTemplate>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Name="gDeck"  VerticalAlignment="Top" Height="270">
+                                                <Grid.Background>
+                                                    <ImageBrush ImageSource="/data/ui/wood.png"/>
+                                                </Grid.Background>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition/>
+
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="auto"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Image Height="64" Source="/data/ui/AgeI.png" />
+                                                    <ListView Background="Transparent" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Column="1" VirtualizingPanel.ScrollUnit="Pixel" ItemsSource="{Binding Path=Age1Cards}">
+                                                        <ListView.ItemContainerStyle>
+                                                            <Style TargetType="{x:Type ListViewItem}">
+                                                                <Setter Property="Background" Value="Transparent" />
+                                                                <Setter Property="Margin" Value="5 0"/>
+                                                                <Setter Property="Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                                            <ContentPresenter />
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </ListView.ItemContainerStyle>
+                                                        <ListView.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Grid ToolTip="{Binding Tooltip}">
+                                                                    <Image  Height="60" Source="{Binding Path=IconPath}"/>
+                                                                    <TextBlock Visibility="{Binding MaxCount, Converter={StaticResource CountToVisibilityConverter}}" HorizontalAlignment="Left" 
+         VerticalAlignment="Top" Padding="2 2 2 0" FontWeight="Bold" Foreground="White" Background="#CC000000" Text="{Binding MaxCount}"/>
+                                                                    <TextBlock Visibility="{Binding DisplayCount, Converter={StaticResource AmountToVisibilityConverter}}" HorizontalAlignment="Left" 
+         VerticalAlignment="Bottom" Padding="2 2 2 0" FontWeight="Bold" Foreground="White" Background="#CC000000" Text="{Binding DisplayCount}"/>
+                                                                </Grid>
+
+                                                            </DataTemplate>
+                                                        </ListView.ItemTemplate>
+
+                                                        <ListView.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <VirtualizingStackPanel Orientation="Horizontal"></VirtualizingStackPanel>
+                                                            </ItemsPanelTemplate>
+                                                        </ListView.ItemsPanel>
+                                                    </ListView>
+                                                    <Separator Grid.Row="1" Grid.ColumnSpan="2"/>
+                                                </Grid>
+                                                <Grid Grid.Row="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="auto"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Image Height="64" Source="/data/ui/AgeII.png" />
+                                                    <ListView Background="Transparent" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Column="1" VirtualizingPanel.ScrollUnit="Pixel" ItemsSource="{Binding Path=Age2Cards}">
+                                                        <ListView.ItemContainerStyle>
+                                                            <Style TargetType="{x:Type ListViewItem}">
+                                                                <Setter Property="Background" Value="Transparent" />
+                                                                <Setter Property="Margin" Value="5 0"/>
+                                                                <Setter Property="Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                                            <ContentPresenter />
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </ListView.ItemContainerStyle>
+                                                        <ListView.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Grid ToolTip="{Binding Tooltip}">
+                                                                    <Image  Height="60" Source="{Binding Path=IconPath}"/>
+                                                                    <TextBlock Visibility="{Binding MaxCount, Converter={StaticResource CountToVisibilityConverter}}" HorizontalAlignment="Left" 
+         VerticalAlignment="Top" Padding="2 2 2 0" FontWeight="Bold" Foreground="White" Background="#CC000000" Text="{Binding MaxCount}"/>
+
+                                                                    <TextBlock Visibility="{Binding DisplayCount, Converter={StaticResource AmountToVisibilityConverter}}" HorizontalAlignment="Left" 
+         VerticalAlignment="Bottom" Padding="2 2 2 0" FontWeight="Bold" Foreground="White" Background="#CC000000" Text="{Binding DisplayCount}"/>
+                                                                </Grid>
+                                                            </DataTemplate>
+                                                        </ListView.ItemTemplate>
+                                                        <ListView.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <VirtualizingStackPanel Orientation="Horizontal"></VirtualizingStackPanel>
+                                                            </ItemsPanelTemplate>
+                                                        </ListView.ItemsPanel>
+                                                    </ListView>
+                                                    <Separator Grid.Row="1" Grid.ColumnSpan="2"/>
+                                                </Grid>
+                                                <Grid Grid.Row="2">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="auto"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Image Height="64" Source="/data/ui/AgeIII.png" />
+                                                    <ListView Background="Transparent" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Column="1" VirtualizingPanel.ScrollUnit="Pixel" ItemsSource="{Binding Path=Age3Cards}">
+                                                        <ListView.ItemContainerStyle>
+                                                            <Style TargetType="{x:Type ListViewItem}">
+                                                                <Setter Property="Background" Value="Transparent" />
+                                                                <Setter Property="Margin" Value="5 0"/>
+                                                                <Setter Property="Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                                            <ContentPresenter />
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </ListView.ItemContainerStyle>
+                                                        <ListView.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Grid ToolTip="{Binding Tooltip}">
+                                                                    <Image  Height="60" Source="{Binding Path=IconPath}"/>
+                                                                    <TextBlock Visibility="{Binding MaxCount, Converter={StaticResource CountToVisibilityConverter}}" HorizontalAlignment="Left" 
+         VerticalAlignment="Top" Padding="2 2 2 0" FontWeight="Bold" Foreground="White" Background="#CC000000" Text="{Binding MaxCount}"/>
+
+                                                                    <TextBlock Visibility="{Binding DisplayCount, Converter={StaticResource AmountToVisibilityConverter}}" HorizontalAlignment="Left" 
+         VerticalAlignment="Bottom" Padding="2 2 2 0" FontWeight="Bold" Foreground="White" Background="#CC000000" Text="{Binding DisplayCount}"/>
+                                                                </Grid>
+                                                            </DataTemplate>
+                                                        </ListView.ItemTemplate>
+                                                        <ListView.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <VirtualizingStackPanel Orientation="Horizontal"></VirtualizingStackPanel>
+                                                            </ItemsPanelTemplate>
+                                                        </ListView.ItemsPanel>
+                                                    </ListView>
+                                                    <Separator Grid.Row="1" Grid.ColumnSpan="2"/>
+                                                </Grid>
+                                                <Grid Grid.Row="3">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Image Height="64" Source="/data/ui/AgeIV.png" />
+                                                    <ListView Background="Transparent" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Column="1" VirtualizingPanel.ScrollUnit="Pixel" ItemsSource="{Binding Path=Age4Cards}">
+                                                        <ListView.ItemContainerStyle>
+                                                            <Style TargetType="{x:Type ListViewItem}">
+                                                                <Setter Property="Background" Value="Transparent" />
+                                                                <Setter Property="Margin" Value="5 0"/>
+                                                                <Setter Property="Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                                            <ContentPresenter />
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </ListView.ItemContainerStyle>
+                                                        <ListView.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Grid ToolTip="{Binding Tooltip}">
+                                                                    <Image  Height="60" Source="{Binding Path=IconPath}"/>
+                                                                    <TextBlock Visibility="{Binding MaxCount, Converter={StaticResource CountToVisibilityConverter}}" HorizontalAlignment="Left" 
+         VerticalAlignment="Top" Padding="2 2 2 0" FontWeight="Bold" Foreground="White" Background="#CC000000" Text="{Binding MaxCount}"/>
+
+                                                                    <TextBlock Visibility="{Binding DisplayCount, Converter={StaticResource AmountToVisibilityConverter}}" HorizontalAlignment="Left" 
+         VerticalAlignment="Bottom" Padding="2 2 2 0" FontWeight="Bold" Foreground="White" Background="#CC000000" Text="{Binding DisplayCount}"/>
+                                                                </Grid>
+                                                            </DataTemplate>
+                                                        </ListView.ItemTemplate>
+                                                        <ListView.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <VirtualizingStackPanel Orientation="Horizontal"></VirtualizingStackPanel>
+                                                            </ItemsPanelTemplate>
+                                                        </ListView.ItemsPanel>
+                                                    </ListView>
+                                                </Grid>
+                                            </Grid>
+                                            <Button HorizontalAlignment="Right" Height="32" Width="256" Grid.Row="1" Content="Make Screenshot" Click="Button_Click_1"/>
+                                        </Grid>
+                                           
+                                        </DataTemplate>
+                                    </TabControl.ContentTemplate>
+                                </TabControl>
+                               
+                           
+                            </DataTemplate>
+                        </TabControl.ContentTemplate>
+                    </TabControl>
+
+     
+            </TabItem>
+            <TabItem  Width="190" Padding="10,5">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="40" Height="23" Source="/data/ui/icon_compass_movemilitary.png" HorizontalAlignment="Left" />
+                        <TextBlock VerticalAlignment="Center" Text="Actions"/>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <TextBlock Text="In development..."/>
+            </TabItem>
+
+            <TabItem  Width="190" Padding="10,5">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="40" Height="23" Source="/data/ui/stat_icon_siege.png" HorizontalAlignment="Left" />
+                        <TextBlock VerticalAlignment="Center" Text="About"/>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <Grid Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+
+                    </Grid.RowDefinitions>
+
+
+                    <Image Grid.Column="0" Grid.Row="0"  Width="64" Height="64" Margin="0,0,20,0" Source="pack://application:,,,/game-age3.ico"/>
+
+                    
+
+                    <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Left" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                
+                <Run Text="Replay Manager" FontSize="22"/>
+                
+                <LineBreak/>
+                <Run Text="Copyright (c) 2019-2022 VladTheJunior"  FontSize="14"/>
+
+                <LineBreak/>
+                <Run Text="version: 0.0.1"  FontSize="14"/>
+                    </TextBlock>
+                    <TextBlock TextWrapping="WrapWithOverflow" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >
+            <LineBreak/>
+                <Run Text="Features:" />
+<LineBreak/>
+<Run FontWeight="Bold" Text= " − "/>
+                        <Run Text="Shows general info about recorded game (title, map, game mode, game version, players, civs)."/>
+<LineBreak/>
+                        <Run FontWeight="Bold" Text= " − " />
+                        <Run Text="Shows players decks with ability to make a screenshot."/>
+<LineBreak/>
+                        <Run FontWeight="Bold" Text= " − " />
+                        <Run Text="Shows list of all important game actions(train units, build, shipment, spawn unit, research tech, selected deck, resigned, cheat tech) with timestamp."/>
+                        <Run Foreground="Red" Text="- in development"/>
+<LineBreak/>
+                        <Run FontWeight="Bold" Text= " − " />
+                        <Run Text="Renaming game records."/>
+                        <Run Foreground="Red" Text="- in development"/>
+                        <LineBreak/>
+                        <Run FontWeight="Bold" Text= " − " />
+                        <Run Text="Shows game summary (winner, apm counter)."/>
+                        <Run Foreground="Red" Text="- in development"/>
+                        <LineBreak/>  
+                         <LineBreak/>  
+                                        <Run Text="The project is based on the following works:" />
+<LineBreak/>
+                        
+                <Run FontWeight="Bold" Text= " − " />
+                <Hyperlink NavigateUri="https://github.com/VladTheJunior/ESO-Tracker" RequestNavigate="Hyperlink_RequestNavigate">
+                <Run Text="VladTheJunior/ESO-Tracker" />
+                </Hyperlink>
+<Run Text="includes Records Parser tool developed in 2019 for Legacy version of Age of Empires 3."/>
+                <LineBreak />  
+                         <LineBreak/>  
+                             <Run Text="Special thanks to:" />
+<LineBreak/>   
+                                <Run FontWeight="Bold" Text= " − " />
+                <Hyperlink NavigateUri="https://eso-community.net/" RequestNavigate="Hyperlink_RequestNavigate">
+                <Run Text="ESO-Community" />
+                </Hyperlink>
+                <Run Text="and in particular"/>
+                        <Run FontWeight="Bold" Text="@Buckethead"/>
+                        <Run Text="for sharing code and explanations."/>
+<LineBreak/>   
+</TextBlock>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <Grid x:Name="gDrapDrop" Background="#ffffff" Visibility="Collapsed">
+            <Border BorderThickness="5" Padding="40" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border.BorderBrush>
+                    <VisualBrush>
+                        <VisualBrush.Visual>
+                            <Rectangle StrokeDashArray="5 2"  Stroke="Gray" StrokeThickness="5"
+                  Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
+                  Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"/>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Border.BorderBrush>
+                <StackPanel VerticalAlignment="Center">
+            <Viewbox Width="192" Height="256">
+                        <Path Fill="Gray" Data="M5.12,5L5.93,4H17.93L18.87,5M12,17.5L6.5,12H10V10H14V12H17.5L12,17.5M20.54,5.23L19.15,3.55C18.88,3.21 18.47,3 18,3H6C5.53,3 5.12,3.21 4.84,3.55L3.46,5.23C3.17,5.57 3,6 3,6.5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V6.5C21,6 20.83,5.57 20.54,5.23Z" />
+                    </Viewbox>
+            <TextBlock Text="Drop .age3Yrec file here!" Foreground="Gray" FontSize="50" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                    <TextBlock Text="or" Foreground="Gray" FontSize="36" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                    <Button Width="256" FontSize="36" Content="Browse File" Click="Button_Click"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Grid x:Name="gProcessing" Background="#ffffff" Visibility="Collapsed">
+            <StackPanel VerticalAlignment="Center">
+                <fa:ImageAwesome Foreground="Gray" Margin="0,20" Icon="Spinner" SpinDuration="4" Spin="True" Height="96" Width="96" />
+                <TextBlock Text="Processing file..." Foreground="Gray" FontSize="50" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

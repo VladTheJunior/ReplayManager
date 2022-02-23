@@ -1,0 +1,11 @@
+﻿<Application x:Class="ReplayManager.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ReplayManager"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <FontFamily x:Key="Trajan Pro">pack://application:,,,/Fonts/#Trajan Pro 3</FontFamily>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
