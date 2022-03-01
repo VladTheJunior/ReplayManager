@@ -18,6 +18,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 
@@ -63,9 +64,11 @@ namespace ReplayManager
 
         public MainWindow()
         {
+            Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(Timeline), new FrameworkPropertyMetadata { DefaultValue = 20 });
             InitializeComponent();
             DataContext = this;
-
+            var myCur = Application.GetResourceStream(new Uri("pack://application:,,,/resources/Cursor.cur")).Stream;
+            Cursor = new Cursor(myCur);
             //var json = File.ReadAllText("Decks.txt");
 
             //var Decks = JsonConvert.DeserializeObject<List<DeckData>>(json);
@@ -78,30 +81,30 @@ namespace ReplayManager
             //record = new age3rec();
             //record.Read(@"C:\Users\vladt\Downloads\5215a87ad592e9fb.age3Yrec");
             //a.Read(@"C:\Users\vladt\Downloads\[EP9 SP] ageofkiller[IR] vs Mr_Bramboy[SI] - ESOC Gran Chaco.age3yrec");
-           /*           FXML a = new FXML(@"C:\Users\vladt\Desktop\Формализация данных\stringtabley.xml",
-                            @"C:\Users\vladt\Desktop\Формализация данных\protoy.xml",
-                            @"C:\Users\vladt\Desktop\Формализация данных\techtreey.xml", 
-                        new List<string>() {
-                        @"C:\Users\vladt\Desktop\Формализация данных\homecityxpsioux.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecityamericans.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecitybritish.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecitychinese.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecitydeinca.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecitydutch.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecityethiopians.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecityfrench.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecitygerman.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecityhausa.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecityindians.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecityjapanese.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecitymexicans.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecityottomans.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecityportuguese.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecityrussians.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecityspanish.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecityswedish.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecityxpaztec.xml",
-            @"C:\Users\vladt\Desktop\Формализация данных\homecityxpiroquois.xml", });*/
+            /*           FXML a = new FXML(@"C:\Users\vladt\Desktop\Формализация данных\stringtabley.xml",
+                             @"C:\Users\vladt\Desktop\Формализация данных\protoy.xml",
+                             @"C:\Users\vladt\Desktop\Формализация данных\techtreey.xml", 
+                         new List<string>() {
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecityxpsioux.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecityamericans.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecitybritish.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecitychinese.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecitydeinca.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecitydutch.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecityethiopians.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecityfrench.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecitygerman.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecityhausa.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecityindians.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecityjapanese.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecitymexicans.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecityottomans.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecityportuguese.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecityrussians.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecityspanish.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecityswedish.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecityxpaztec.xml",
+             @"C:\Users\vladt\Desktop\Формализация данных\homecityxpiroquois.xml", });*/
         }
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
@@ -120,8 +123,7 @@ namespace ReplayManager
             bool dropEnabled = true;
             if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
             {
-                string[] filenames =
-                                 e.Data.GetData(DataFormats.FileDrop, true) as string[];
+                string[] filenames = e.Data.GetData(DataFormats.FileDrop, true) as string[];
 
                 foreach (string filename in filenames)
                 {
@@ -196,8 +198,8 @@ string filename)
 
         private void Window_DragLeave(object sender, DragEventArgs e)
         {
-            if (record != null) 
-            { 
+            if (record != null)
+            {
                 gDrapDrop.Visibility = Visibility.Collapsed;
             }
         }
@@ -238,7 +240,7 @@ string filename)
                 record = new age3rec();
                 if (await record.Read(openFileDialog.FileName))
                 {
-                    RecordPath=openFileDialog.FileName;
+                    RecordPath = openFileDialog.FileName;
                     NotifyPropertyChanged("record");
                     gProcessing.Visibility = Visibility.Collapsed;
                 }
@@ -248,7 +250,7 @@ string filename)
                     gProcessing.Visibility = Visibility.Collapsed;
                 }
 
-               
+
             }
 
         }
@@ -301,7 +303,7 @@ string filename)
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            foreach (var grid in FindVisualChildren<Grid>(this))
+            foreach (var grid in FindVisualChildren<Border>(this))
             {
                 if (grid.Name == "gDeck")
                 {
@@ -311,6 +313,21 @@ string filename)
             }
 
         }
+
+        private void bClose_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
     }
 
     public class StringToColorConverter : IValueConverter
@@ -319,7 +336,7 @@ string filename)
         {
             if (value != null)
             {
-               return (SolidColorBrush)new BrushConverter().ConvertFrom(value.ToString());
+                return (SolidColorBrush)new BrushConverter().ConvertFrom(value.ToString());
             }
 
             return value;

@@ -5,6 +5,10 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="SystemResources.xaml" />
+                
+            </ResourceDictionary.MergedDictionaries>
             <FontFamily x:Key="Trajan Pro">pack://application:,,,/Fonts/#Trajan Pro 3</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
