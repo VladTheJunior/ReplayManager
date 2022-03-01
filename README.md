@@ -16,7 +16,7 @@
 *Tool to viewing Age of Empires III: Definitive Edition records*
 
 **Developer:** VladTheJunior<br />
-**Current version:** 0.0.1<br />
+**Current version:** 0.0.2<br />
 [Download Portable (.zip archive)](https://github.com/VladTheJunior/ReplayManager/releases/latest/download/ReplayManager.zip)<br />
 
 ## Table of Contents
@@ -31,20 +31,21 @@
 ## About The Project
 
 Replay Manager is an update to Records Parser tool from ESO Tracker developed in 2019 for Legacy version of Age of Empires 3. It shows most of the useful information needed to analyze recorded game. 
-Due to the different file structures between Legacy and DE, some features (such as game actions) could not be migrated immediately and require extensive testing and development. 
 If you have information or desire to help in testing or development, then leave a message in the topic on the official forum or DM me in Discord.
 
 **Features:**
 * Shows general info about recorded game (title, map, game mode, game version, players, civs).
 * Shows ALL (even not used) players decks with ability to make a screenshot.
-* Shows list of all important game actions(train units, build, shipment, spawn unit, research tech, selected deck, resigned, cheat tech) with timestamp. - **In development**
+* Shows list of all important game actions(chat, train units, build, shipment, spawn unit, research tech, selected deck, resigned, cheat tech) with timestamp.
 * Renaming game records. - **In development**
-* Shows game summary (winner, apm counter). - **In development**
+* Shows game summary (winner, apm counter).
 
 ## Screenshots
 
 ![](Images/1.png)
 ![](Images/2.png)
+![](Images/3.png)
+![](Images/4.png)
 
 <!-- LICENSE -->
 ## License
