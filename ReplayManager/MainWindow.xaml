@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ReplayManager"
         mc:Ignorable="d"
         AllowDrop="True"
-            FontFamily="{StaticResource Trajan Pro}"
+            FontFamily="/Fonts/#Trajan Pro 3"
     FontSize="14"
         WindowStyle="None"
         BorderBrush="Black"

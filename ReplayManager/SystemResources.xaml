@@ -218,7 +218,7 @@
 
 
     <Style TargetType="TextBlock" x:Key="CampaignTitleTextBlockStyle">
-        <Setter Property="FontFamily" Value="Trajan Pro" />
+        <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="20" />
         <Setter Property="Foreground" Value="{StaticResource ButtonTextGradient}" />
@@ -233,7 +233,7 @@
 
     <Style TargetType="TextBlock" x:Key="subInfoLeft">
         <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="FontFamily" Value="Trajan Pro" />
+        <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3" />
 
         <Setter Property="Foreground" Value="#dbd5c3" />
         <Setter Property="FontSize" Value="14" />
@@ -571,7 +571,7 @@
     </Style>
 
     <Style TargetType="TextBlock" x:Key="PlayerNameStyle">
-        <Setter Property="FontFamily" Value="Trajan Pro" />
+        <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3" />
 
         <Setter Property="FontSize" Value="16" />
         <Setter Property="Foreground" Value="White" />
@@ -591,7 +591,7 @@
             </EventTrigger>
         </Style.Triggers>
 
-        <Setter Property="FontFamily" Value="Trajan Pro" />
+        <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Height" Value="32" />
         <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True"/>
@@ -763,7 +763,7 @@
     </Style>
 
     <Style TargetType="CheckBox" x:Key="Checkbox_Medium">
-        <Setter Property="FontFamily" Value="Trajan Pro" />
+        <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Foreground" Value="#dbd5c3" />
         
@@ -943,7 +943,7 @@
         <Setter Property="Width" Value="192" />
         <Setter Property="Height" Value="24" />
         <Setter Property="Margin" Value="0,0,0,2" />
-        <Setter Property="FontFamily" Value="Trajan Pro" />
+        <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Padding" Value="8"/>
         <Setter Property="Foreground" Value="White" />
@@ -1020,7 +1020,7 @@
     <Style TargetType="{x:Type TextBox}" x:Key="hcInfoName">
         <Setter Property="Width" Value="192" />
         <Setter Property="Height" Value="24" />
-        <Setter Property="FontFamily" Value="Trajan Pro" />
+        <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3" />
         <Setter Property="FontSize" Value="14" />
 
         <Setter Property="Foreground" Value="#d5d5d5" />
@@ -1061,7 +1061,7 @@
 
 
     <Style TargetType="{x:Type Button}" x:Key="ImageButton">
-        <Setter Property="FontFamily" Value="Trajan Pro"/>
+        <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3"/>
         <Setter Property="Height" Value="35"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -1261,7 +1261,7 @@
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="VerticalAlignment" Value="Top" />
 
-        <Setter Property="FontFamily" Value="Trajan Pro" />
+        <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
 
         <Setter Property="Foreground" Value="White" />
