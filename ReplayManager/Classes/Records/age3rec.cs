@@ -1769,7 +1769,7 @@ namespace ReplayManager.Classes.Records
 
 
                         duration += Reader.ReadByte();
-
+                        //Debug.WriteLine(mainCommand);
                         int commandsCount = 0;
                         if (hasCommands)
                         {
@@ -2122,8 +2122,10 @@ namespace ReplayManager.Classes.Records
                                     ExpectedValue(0, unknown2);
                                     ExpectedValue(2, unknownCount);
 
-                                    Reader.ReadBytes(26);
+                                    Reader.ReadBytes(16); //fixed, was 26, my bad probably
                                     actions.Add(new GameAction() { Duration = duration, Player = Players.FirstOrDefault(x => x.id == playerId), Type = "unknown", Message = "unknown8" });
+
+                                    Reader.ReadByte(); // need to test with versions
                                 }
                                 else if (commandId == 23)
                                 {
