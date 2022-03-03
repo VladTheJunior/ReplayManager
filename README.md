@@ -32,7 +32,7 @@
 
 Replay Manager is an update to Records Parser tool from ESO Tracker developed in 2019 for Legacy version of Age of Empires 3. It shows most of the useful information needed to analyze recorded game. 
 If you have information or desire to help in testing or development, then leave a message in the topic on the official forum or DM me in Discord.
-You can also join my discord server to stay up to date with the latest updates and news about my current developments and projects: [](https://discord.gg/egcZRKgj4q)
+You can also join my discord server to stay up to date with the latest updates and news about my current developments and projects: [Commando Squad](https://discord.gg/egcZRKgj4q)
 
 **Features:**
 * Shows general info about recorded game (title, map, game mode, game version, players, civs).
