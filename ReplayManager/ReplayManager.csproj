@@ -8,8 +8,12 @@
     <ApplicationIcon>game-age3.ico</ApplicationIcon>
     <Authors>VladTheJunior</Authors>
     <Copyright>VladTheJunior</Copyright>
-    <Version>0.0.2</Version>
+    <Version>0.0.3</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="resources\rename_icon.png" />
+  </ItemGroup>
 
  
 
@@ -1549,7 +1553,6 @@
     <Resource Include="resources\combo_arrow.png" />
     <Resource Include="resources\Cursor.cur" />
     <Resource Include="resources\images\campaignmenu\campaignselect_textbg.png" />
-    <Resource Include="resources\images\campaignmenu\campaign_bg1.png" />
     <Resource Include="resources\images\campaignmenu\levels\lvlcard_mask.png" />
     <Resource Include="resources\images\hud\hud_chat_combobox.png" />
     <Resource Include="resources\images\hud\imagebutton_glow.png" />
@@ -1557,6 +1560,7 @@
     <Resource Include="resources\images\icons\post_game\playertitle_gradient.png" />
     <Resource Include="resources\images\icons\post_game\playertitle_mask.png" />
     <Resource Include="resources\loadingspinner.png" />
+    <Resource Include="resources\rename_icon.png" />
     <Resource Include="resources\titlebar_tile.png" />
     <Resource Include="resources\wood.png" />
   </ItemGroup>

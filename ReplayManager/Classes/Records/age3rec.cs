@@ -23,6 +23,29 @@ namespace ReplayManager.Classes.Records
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private string recordPath;
+        public string RecordPath
+        {
+            get
+            {
+                return recordPath;
+            }
+            set
+            {
+                recordPath = value;
+                NotifyPropertyChanged();
+                NotifyPropertyChanged("RecordPathFileName");
+            }
+        }
+
+        public string RecordPathFileName
+        {
+            get
+            {
+                return Path.GetFileName(RecordPath);
+            }
+        }
         private BinaryReader Reader { get; set; }
         byte MagicNumber { get; set; }
         byte IsMultiplayer { get; set; }
@@ -101,6 +124,21 @@ namespace ReplayManager.Classes.Records
                 NotifyPropertyChanged();
             }
         }
+
+        private TimeSpan gameDuration;
+        public TimeSpan GameDuration
+        {
+            get
+            {
+                return gameDuration;
+            }
+            set
+            {
+                gameDuration = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         private bool gameFFA;
         public bool GameFFA
         {
@@ -228,6 +266,7 @@ namespace ReplayManager.Classes.Records
                 gameNoRush = value;
                 NotifyPropertyChanged();
                 NotifyPropertyChanged("Rules");
+                NotifyPropertyChanged("ShortGameModeType");
             }
         }
 
@@ -428,6 +467,53 @@ namespace ReplayManager.Classes.Records
                 gameModeType = value;
                 NotifyPropertyChanged();
                 NotifyPropertyChanged("Rules");
+                NotifyPropertyChanged("ShortGameModeType");
+            }
+        }
+
+        public string RenamedRecord
+        {
+            get
+            {
+                if (GameNumPlayers == 2)
+                {
+                    string name =  $"[{ShortGameModeType}] {Players[0].name}[{Players[0].GameCiv.short_name}] vs {Players[1].name}[{Players[1].GameCiv.short_name}] - {GameFileName}.age3yrec";
+                    return string.Join("_", name.Split(Path.GetInvalidFileNameChars()));
+                }
+                else
+                {
+                    string name = $"[{ShortGameModeType}] ";
+                    foreach (GamePlayer player in Players)
+                    {
+                        name+= $"{player.name}[{player.GameCiv.short_name}], ";
+
+                    }
+                    name = name.Remove(name.Length - 2);
+                    name += $" - {GameFileName}.age3yrec";
+                    return string.Join("_", name.Split(Path.GetInvalidFileNameChars()));
+                }
+            }
+        }
+
+        public string ShortGameModeType
+        {
+            get
+            {
+                var mode = "UNK";
+                switch (gameModeType)
+                {
+                    case 0: mode = "SP"; break;
+                    case 1: mode = "DM"; break;
+                    case 2: mode = "EW"; break;
+                    case 3: mode = "TR"; break;
+                    case 4: mode = "DM"; break;
+                    case 5: mode = "CB"; break;
+                    case 6: mode = "SC"; break;
+                    case 7: mode = "SG"; break;
+                }
+                if (GameNoRush > 0)
+                    mode += GameNoRush.ToString();
+                return mode;
             }
         }
 
@@ -453,6 +539,10 @@ namespace ReplayManager.Classes.Records
                     if (!GameBlockade)
                     {
                         mode = mode + $" (No Rush {GameNoRush} min., No Blockade)";
+                    }
+                    else
+                    {
+                        mode = mode + $" (No Rush {GameNoRush} min.)";
                     }
                 }
 
@@ -530,10 +620,7 @@ namespace ReplayManager.Classes.Records
 
         private IReadOnlyCollection<GameAction> Actions { get; set; }
         private List<GameVersion> Versions { get; set; } = new List<GameVersion>();
-        private List<DeckData> DeckDatas { get; set; }
 
-        private List<TechData> TechDatas { get; set; }
-        private List<ProtoData> UnitDatas { get; set; }
 
         private CollectionViewSource actionsCollection;
         public ICollectionView ActionsCollection
@@ -683,7 +770,7 @@ namespace ReplayManager.Classes.Records
         {
             if (value1 != value2)
             {
-                throw new Exception($"Invalid value: {value1}, expected: {value2}");
+                throw new Exception($"Offset: {Reader.BaseStream.Position}\nInvalid value: {value1}, expected: {value2}");
             }
         }
 
@@ -1074,7 +1161,11 @@ namespace ReplayManager.Classes.Records
         {
             try
             {
+                List<DeckData> DeckDatas;
 
+                List<TechData> TechDatas;
+                List<ProtoData> UnitDatas;
+                RecordPath = path;
                 var json = await File.ReadAllTextAsync("data\\Decks.txt");
                 DeckDatas = JsonConvert.DeserializeObject<List<DeckData>>(json);
                 json = await File.ReadAllTextAsync("data\\Techs.txt");
@@ -1121,7 +1212,7 @@ namespace ReplayManager.Classes.Records
                 // decoding l33t
                 if (L33TZipUtils.IsL33TZipFile(data))
                     data = await L33TZipUtils.ExtractL33TZippedBytesAsync(data);
-                //await File.WriteAllBytesAsync("logs\\uncompressed_record", data);
+                //await File.WriteAllBytesAsync("uncompressed_record", data);
                 using var stream = new MemoryStream(data);
 
                 Reader = new BinaryReader(stream);
@@ -1129,7 +1220,7 @@ namespace ReplayManager.Classes.Records
 
                 if (MagicNumber != 4)
                 {
-                    throw new Exception("File is not Age of Empires 3 record file");
+                    throw new Exception("File is not Age of Empires 3: DE record file");
                 }
 
                 Reader.ReadBytes(16);
@@ -1332,6 +1423,11 @@ namespace ReplayManager.Classes.Records
                                 }
                                 var deckId = Reader.ReadInt32();
                                 bufLength = Reader.ReadInt32();
+                                if (bufLength < 0)
+                                {
+                                    leaveLoop = true;
+                                    break;
+                                }
                                 var deckName = Encoding.Unicode.GetString(Reader.ReadBytes(bufLength * 2));
                                 var gameId = Reader.ReadInt32();
                                 var isDefault = Reader.ReadBoolean();
@@ -1958,7 +2054,8 @@ namespace ReplayManager.Classes.Records
                                     if (unknown1 == 0)
                                     {
                                         Type = "ability";
-                                        if (ExeVersion > 132919)
+                                        // if (ExeVersion > 132919) hmmm I was mistaken here probably
+                                        if (ExeVersion > 135159)
                                             Reader.ReadBytes(1); // EAT 1 byte
                                     }
                                     else if (unknown1 == 3)
@@ -2428,6 +2525,7 @@ namespace ReplayManager.Classes.Records
 
                     }
                 });
+                GameDuration = TimeSpan.FromMilliseconds(duration);
                 Actions = new ReadOnlyCollection<GameAction>(actions);
                 actionsCollection.Source = Actions;
                 actionsCollection.Filter += Filter;
@@ -2443,6 +2541,7 @@ namespace ReplayManager.Classes.Records
                 }
 
                 NotifyPropertyChanged("Players");
+                NotifyPropertyChanged("RenamedRecord");
                 NotifyPropertyChanged("RecordOwner");
                 /*Debug.WriteLine("player 1");
                 foreach (var line in actions.Where(x=>x.Player.id==1).GroupBy(info => info.Type)
@@ -2471,7 +2570,7 @@ namespace ReplayManager.Classes.Records
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"File name: {RecordPathFileName}\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }

@@ -4,6 +4,7 @@ using ReplayManager.Classes.Records;
 using ReplayManager.Classes.XMLFormalization;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -28,6 +29,36 @@ namespace ReplayManager
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
+    public class RelayCommand : ICommand
+    {
+        private Action<object> execute;
+        private Func<object, bool> canExecute;
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+        {
+            this.execute = execute;
+            this.canExecute = canExecute;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return this.canExecute == null || this.canExecute(parameter);
+        }
+
+        public void Execute(object parameter)
+        {
+            this.execute(parameter);
+        }
+    }
+
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
 
@@ -37,30 +68,35 @@ namespace ReplayManager
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private string recordPath;
-        public string RecordPath
+        public ObservableCollection<age3rec> Records { get; set; } = new ObservableCollection<age3rec>();
+
+        private RelayCommand closeCommand;
+
+        public RelayCommand CloseCommand
         {
             get
             {
-                return recordPath;
-            }
-            set
-            {
-                recordPath = value;
-                NotifyPropertyChanged();
-                NotifyPropertyChanged("RecordPathFileName");
+                if (this.closeCommand == null)
+                {
+                    this.closeCommand = new RelayCommand(w => CloseCommandMethod(w), null);
+                }
+                return this.closeCommand;
             }
         }
 
-        public string RecordPathFileName
+        private RelayCommand renameCommand;
+
+        public RelayCommand RenameCommand
         {
             get
             {
-                return Path.GetFileName(RecordPath);
+                if (this.renameCommand == null)
+                {
+                    this.renameCommand = new RelayCommand(w => RenameCommandMethod(w), null);
+                }
+                return this.renameCommand;
             }
         }
-
-        public age3rec record { get; set; }
 
         public MainWindow()
         {
@@ -198,7 +234,7 @@ string filename)
 
         private void Window_DragLeave(object sender, DragEventArgs e)
         {
-            if (record != null)
+            if (Records.Count > 0)
             {
                 gDrapDrop.Visibility = Visibility.Collapsed;
             }
@@ -211,41 +247,79 @@ string filename)
             {
                 gDrapDrop.Visibility = Visibility.Collapsed;
                 gProcessing.Visibility = Visibility.Visible;
+                bRenameAll.IsEnabled = false;
+                bOpen.IsEnabled = false;
                 // Note that you can have more than one file.
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                record = new age3rec();
-                if (await record.Read(files[0]))
+                foreach (string file in files)
                 {
-                    RecordPath = files[0];
-                    NotifyPropertyChanged("record");
+                    if (Records.Any(x => x.RecordPath.ToLower() == file.ToLower()))
+                    {
+                        continue;
+                    }
+                    var record = new age3rec();
+                    if (await record.Read(file))
+                    {
+                        Records.Add(record);
+                    }
+                }
+                bOpen.IsEnabled = true;
+                if (Records.Count > 0)
+                {
+                    bRenameAll.IsEnabled = true;
                     gProcessing.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
                     gDrapDrop.Visibility = Visibility.Visible;
                     gProcessing.Visibility = Visibility.Collapsed;
+                    bRenameAll.IsEnabled = false;
                 }
             }
+        }
+
+        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ScrollViewer scrollviewer = sender as ScrollViewer;
+            if (e.Delta > 0)
+                scrollviewer.LineLeft();
+            else
+                scrollviewer.LineRight();
+            e.Handled = true;
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Age of Empires 3 record|*.age3yrec";
-            openFileDialog.Multiselect = false;
+            openFileDialog.Multiselect = true;
             if (openFileDialog.ShowDialog() == true)
             {
                 gDrapDrop.Visibility = Visibility.Collapsed;
                 gProcessing.Visibility = Visibility.Visible;
-                record = new age3rec();
-                if (await record.Read(openFileDialog.FileName))
+                bRenameAll.IsEnabled = false;
+                bOpen.IsEnabled = false;
+                foreach (string file in openFileDialog.FileNames)
                 {
-                    RecordPath = openFileDialog.FileName;
-                    NotifyPropertyChanged("record");
+                    if (Records.Any(x=> x.RecordPath.ToLower() == file.ToLower()))
+                    {
+                        continue;
+                    }
+                    var record = new age3rec();
+                    if (await record.Read(file))
+                    {
+                        Records.Add(record);
+                    }
+                }
+                bOpen.IsEnabled = true;
+                if (Records.Count > 0)
+                {
+                    bRenameAll.IsEnabled = true;
                     gProcessing.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
+                    bRenameAll.IsEnabled = false;
                     gDrapDrop.Visibility = Visibility.Visible;
                     gProcessing.Visibility = Visibility.Collapsed;
                 }
@@ -327,6 +401,62 @@ string filename)
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
+        }
+
+        private void CloseCommandMethod(object parameter)
+        {
+            Records.Remove(Records.First(x=> x.RecordPath == parameter.ToString()));
+            if (Records.Count == 0)
+            {
+                gDrapDrop.Visibility = Visibility.Visible;
+                bRenameAll.IsEnabled = false;
+            }
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
+        }
+
+        private void RenameCommandMethod(object parameter)
+        {
+            bRenameAll.IsEnabled = false;
+            bOpen.IsEnabled = false;
+            try
+            {
+                var record = Records.First(x => x.RecordPath == parameter.ToString());
+                string newPath = Path.Combine(Path.GetDirectoryName(record.RecordPath), record.RenamedRecord);
+                File.Move(record.RecordPath, newPath, true);
+                record.RecordPath = newPath;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            bRenameAll.IsEnabled = true;
+            bOpen.IsEnabled = true;
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            bOpen.IsEnabled = false;
+            bRenameAll.IsEnabled = false;
+            foreach (var record in Records)
+            {
+                try
+                {
+                    string newPath = Path.Combine(Path.GetDirectoryName(record.RecordPath), record.RenamedRecord);
+                    File.Move(record.RecordPath, newPath, true);
+                    record.RecordPath = newPath;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            bRenameAll.IsEnabled = true;
+            bOpen.IsEnabled = true;
         }
     }
 

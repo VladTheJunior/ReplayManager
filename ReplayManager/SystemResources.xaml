@@ -2,7 +2,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:ReplayManager">
-    <ImageBrush x:Key="campaign_bg1" ImageSource="/resources/images/campaignmenu/campaign_bg1.png" Stretch="UniformToFill" />
     <ControlTemplate x:Key="Spinner">
         <Grid>
             <Rectangle Width="200" Height="200" RenderTransformOrigin="0.5,0.5">
@@ -747,21 +746,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style x:Key="CheckBoxFocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Border Width="35" Height="35" HorizontalAlignment="Left" Margin="2,0,0,0" Background="{StaticResource Checkbox_Focused}">
-                        <!--
-                        <Ellipse Margin="0,0,4,0" Width="30" Height="30" StrokeThickness="3" Opacity="0.5" Stroke="Yellow" />
-                        -->
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style TargetType="CheckBox" x:Key="Checkbox_Medium">
         <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3" />
         <Setter Property="FontSize" Value="14" />
@@ -770,7 +754,7 @@
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True"/>
-        <Setter Property="FocusVisualStyle" Value="{StaticResource CheckBoxFocusVisual}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
@@ -1197,30 +1181,56 @@
     </Style>
 
     <Style x:Key="{x:Type TabItem}" TargetType="TabItem">
-        <Setter Property="BorderBrush" Value="{StaticResource SolidBorderBrush}"/>
-        <Setter Property="Background" Value="{StaticResource LightBrush}"/>
-        <Setter Property="ContentTemplate" Value="{x:Null}"/>
-        <Setter Property="ContentTemplateSelector" Value="{x:Null}"/>
-        <Setter Property="HeaderTemplate" Value="{x:Null}"/>
-        <Setter Property="HeaderTemplateSelector" Value="{x:Null}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextGradient}" />
+        
+        
+        <Setter Property="Width" Value="auto" />
+        <Setter Property="Height" Value="auto" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect BlurRadius="10" Color="Black" Direction="-90" ShadowDepth="1.5" RenderingBias="Quality" />
+            </Setter.Value>
+        </Setter>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
-                    <Grid>
-                        <Border x:Name="Border" Margin="5,0,0,5" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="2" CornerRadius="4">
-                            <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header" Margin="12,2,12,2" RecognizesAccessKey="True" />
+                    <Grid Margin="5,0,0,5">
+                        <Border  Name="Border" Background="Transparent" BorderThickness="2" CornerRadius="4">
+                            <ContentPresenter  x:Name="contentPresenter" ContentSource="Header" Focusable="False" RecognizesAccessKey="True" />
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStopCollection>
+                                            <GradientStop Color="#755f22" Offset="0" />
+                                            <GradientStop Color="#ceb165" Offset="0.25" />
+                                            <GradientStop Color="#ffe6a6" Offset="0.5" />
+                                            <GradientStop Color="#ceb165" Offset="0.25" />
+                                            <GradientStop Color="#755f22" Offset="1" />
+                                        </GradientStopCollection>
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
                         </Border>
                     </Grid>
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Panel.ZIndex" Value="100" />
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
-                            <Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0" />
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource MainMenuButtonInnerGradientPress}" />
+                            <Setter Property="BorderBrush" Value="{StaticResource MainMenuButtonStrokeGradientOver}"/>
+                            <Trigger.EnterActions>
+                                <SoundPlayerAction Source="resources/audio/smallbutton.wav" />
+                            </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter Property="Panel.ZIndex" Value="-100" />
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource MainMenuButtonInnerGradient}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource DisabledBackgroundBrush}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DisabledBorderBrush}" />
-                            <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="DarkRed" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="Black" />
+                            <Setter Property="Foreground" Value="DarkGray" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -1253,6 +1263,9 @@
                 Fill="{StaticResource ButtonStrokeGradient}" />
         </Grid>
     </ControlTemplate>
+
+
+
 
     <Style x:Key="scenarioEscButton" TargetType="{x:Type Button}">
         <Setter Property="Height" Value="30" />
@@ -1307,13 +1320,7 @@
                             </Trigger.EnterActions>
                         </Trigger>
 
-                        <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="border" Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="#5d451e" />
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
+
 
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="border" Property="Background">
