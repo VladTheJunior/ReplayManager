@@ -201,7 +201,7 @@ string filename)
             encoder.Frames.Add(BitmapFrame.Create(rtb));
 
             // Save the file.
-            using (FileStream fs = new FileStream(Path.Combine(Environment.CurrentDirectory, filename),
+            using (FileStream fs = new FileStream(Path.Combine(AppContext.BaseDirectory, filename),
                 FileMode.Create, FileAccess.Write, FileShare.None))
             {
                 encoder.Save(fs);
@@ -211,7 +211,7 @@ string filename)
             Process.Start(new ProcessStartInfo()
             {
                 FileName = "explorer",
-                Arguments = "/e, /select, \"" + Path.Combine(Environment.CurrentDirectory, filename) + "\""
+                Arguments = "/e, /select, \"" + Path.Combine(AppContext.BaseDirectory, filename) + "\""
             });
             Process.Start(new ProcessStartInfo()
             {
@@ -302,8 +302,8 @@ string filename)
             {
                 if (grid.Name == "gDeck")
                 {
-                    Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Screenshots"));
-                    SaveControlImage(grid, Path.Combine("Screenshots", DateTime.Now.ToString("yyyy-M-dd--HH-mm-ss") + ".png"));
+                    Directory.CreateDirectory(Path.Combine(AppContext.BaseDirectory, "Screenshots"));
+                    SaveControlImage(grid, Path.Combine(AppContext.BaseDirectory, "Screenshots", DateTime.Now.ToString("yyyy-M-dd--HH-mm-ss") + ".png"));
                 }
             }
 
@@ -382,7 +382,7 @@ string filename)
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //MessageBox.Show("OpENED");
-            //await readFiles(Environment.GetCommandLineArgs());
+            await readFiles(Environment.GetCommandLineArgs());
             var pipe = new SingleInstanceApp();
             pipe.ReceiveLine += OnReceiveLine;
             await pipe.StartServer("ReplayManager");

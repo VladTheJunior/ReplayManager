@@ -1166,11 +1166,11 @@ namespace ReplayManager.Classes.Records
                 List<TechData> TechDatas;
                 List<ProtoData> UnitDatas;
                 RecordPath = path;
-                var json = await File.ReadAllTextAsync(Path.Combine(Environment.CurrentDirectory, "data", "Decks.txt"));
+                var json = await File.ReadAllTextAsync(Path.Combine(AppContext.BaseDirectory, "data", "Decks.txt"));
                 DeckDatas = JsonConvert.DeserializeObject<List<DeckData>>(json);
-                json = await File.ReadAllTextAsync(Path.Combine(Environment.CurrentDirectory, "data", "Techs.txt"));
+                json = await File.ReadAllTextAsync(Path.Combine(AppContext.BaseDirectory, "data", "Techs.txt"));
                 TechDatas = JsonConvert.DeserializeObject<List<TechData>>(json);
-                json = await File.ReadAllTextAsync(Path.Combine(Environment.CurrentDirectory, "data", "Units.txt"));
+                json = await File.ReadAllTextAsync(Path.Combine(AppContext.BaseDirectory, "data", "Units.txt"));
                 UnitDatas = JsonConvert.DeserializeObject<List<ProtoData>>(json);
 
                 Versions.Add(new GameVersion() { ExeVersion = 132912, PatchVersion = "0", PatchNotes = "", ReleaseDate = new DateOnly(2020, 10, 13) });

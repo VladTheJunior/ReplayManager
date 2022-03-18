@@ -25,13 +25,10 @@ namespace ReplayManager.Classes
                     await server.WaitForConnectionAsync();
 
                     var reader = new StreamReader(server);
+                    string line = await reader.ReadLineAsync();
 
-
-                            string line = await reader.ReadLineAsync();
-
-             
-                            if (line != null)
-                                OnReceiveString(line);
+                    if (line != null)
+                        OnReceiveString(line);
 
                 }
             });
@@ -53,15 +50,15 @@ namespace ReplayManager.Classes
                 return false;
             }
             if (!client.IsConnected)
-                    return false;
+                return false;
 
             var writer = new StreamWriter(client)
-                {
-                    AutoFlush = true
-                };
-                await writer.WriteLineAsync(text);
+            {
+                AutoFlush = true
+            };
+            await writer.WriteLineAsync(text);
 
-           
+
             return true;
 
         }
