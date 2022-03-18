@@ -16,8 +16,8 @@
 *Tool to viewing Age of Empires III: Definitive Edition records*
 
 **Developer:** VladTheJunior<br />
-**Current version:** 0.0.3<br />
-[Download Portable (.zip archive)](https://github.com/VladTheJunior/ReplayManager/releases/latest/download/ReplayManager.zip)<br />
+**Current version:** 0.0.4<br />
+[Download Installer from Google Drive](https://drive.google.com/file/d/1CWllsPu4nlsaZQMlgazMdCEDTqg4tTVY/view?usp=sharing)<br />
 
 ## Table of Contents
 
@@ -40,6 +40,7 @@ You can also join my discord server to stay up to date with the latest updates a
 * Shows list of all important game actions(chat, train units, build, shipment, spawn unit, research tech, selected deck, resigned, cheat tech) with timestamp.
 * Renaming game records.
 * Shows game summary (winner, apm counter).
+* Open record file from windows explorer (just double click).
 
 ## Screenshots
 
