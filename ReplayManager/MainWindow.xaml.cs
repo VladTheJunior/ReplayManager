@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using Newtonsoft.Json;
+using ReplayManager.Classes;
 using ReplayManager.Classes.Records;
 using ReplayManager.Classes.XMLFormalization;
 using System;
@@ -98,6 +99,22 @@ namespace ReplayManager
             }
         }
 
+        public void OnReceiveLine(string file)
+        {
+            Dispatcher.Invoke(async () =>
+            {
+
+                await readFiles(new string[] { file });
+
+                if (WindowState == WindowState.Minimized)
+                    WindowState = WindowState.Normal;
+
+                Topmost = true;
+                Activate();
+                await Dispatcher.BeginInvoke(new Action(() => { Topmost = false; }));
+            });
+        }
+
         public MainWindow()
         {
             Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(Timeline), new FrameworkPropertyMetadata { DefaultValue = 20 });
@@ -105,42 +122,41 @@ namespace ReplayManager
             DataContext = this;
             var myCur = Application.GetResourceStream(new Uri("pack://application:,,,/resources/Cursor.cur")).Stream;
             Cursor = new Cursor(myCur);
-            //var json = File.ReadAllText("Decks.txt");
+            /*
+                        FXML.GenerateUnitsFile(@"C:\Users\vladt\Desktop\Формализация данных\stringtabley.xml",
+                                         @"C:\Users\vladt\Desktop\Формализация данных\protoy.xml");
+                        FXML.GenerateTechsFile(@"C:\Users\vladt\Desktop\Формализация данных\stringtabley.xml",
+                            @"C:\Users\vladt\Desktop\Формализация данных\techtreey.xml");
+                        FXML.GenerateDecksFile(@"C:\Users\vladt\Desktop\Формализация данных\stringtabley.xml",
+                            @"C:\Users\vladt\Desktop\Формализация данных\techtreey.xml", new List<string>() {
+                                     @"C:\Users\vladt\Desktop\Формализация данных\homecityxpsioux.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecityamericans.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecitybritish.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecitychinese.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecitydeinca.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecitydutch.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecityethiopians.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecityfrench.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecitygerman.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecityhausa.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecityindians.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecityjapanese.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecitymexicans.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecityottomans.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecityportuguese.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecityrussians.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecityspanish.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecityswedish.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecityxpaztec.xml",
+                         @"C:\Users\vladt\Desktop\Формализация данных\homecityxpiroquois.xml", });
 
-            //var Decks = JsonConvert.DeserializeObject<List<DeckData>>(json);
-            //List<string> icons = new List<string>();
-            //Decks.ForEach(d => { icons.AddRange(d.Cards.Select(x => x.Icon)); });
 
-            //File.WriteAllLines("icons.txt", icons.Distinct().ToList());
-            //a.Read(@"C:\Users\vladt\Downloads\[RE SP] NiciusGER[IN] vs Shogun_Jong[IR] - Siberia.age3yrec");
-            //a.Read("C:\\Users\\vladt\\Downloads\\5215a87ad592e9fb.age3Yrec");
-            //record = new age3rec();
-            //record.Read(@"C:\Users\vladt\Downloads\5215a87ad592e9fb.age3Yrec");
-            //a.Read(@"C:\Users\vladt\Downloads\[EP9 SP] ageofkiller[IR] vs Mr_Bramboy[SI] - ESOC Gran Chaco.age3yrec");
-            /*           FXML a = new FXML(@"C:\Users\vladt\Desktop\Формализация данных\stringtabley.xml",
-                             @"C:\Users\vladt\Desktop\Формализация данных\protoy.xml",
-                             @"C:\Users\vladt\Desktop\Формализация данных\techtreey.xml", 
-                         new List<string>() {
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecityxpsioux.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecityamericans.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecitybritish.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecitychinese.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecitydeinca.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecitydutch.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecityethiopians.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecityfrench.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecitygerman.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecityhausa.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecityindians.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecityjapanese.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecitymexicans.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecityottomans.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecityportuguese.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecityrussians.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecityspanish.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecityswedish.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecityxpaztec.xml",
-             @"C:\Users\vladt\Desktop\Формализация данных\homecityxpiroquois.xml", });*/
+                        var json = File.ReadAllText("data/Decks.txt");
+                        var Decks = JsonConvert.DeserializeObject<List<DeckData>>(json);
+                        List<string> icons = new List<string>();
+                        Decks.ForEach(d => { icons.AddRange(d.Cards.Select(x => x.Icon)); });
+
+                        File.WriteAllLines("icons.txt", icons.Distinct().ToList());*/
         }
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
@@ -153,34 +169,7 @@ namespace ReplayManager
             Process.Start(psi);
         }
 
-        private void Window_DragEnter(object sender, DragEventArgs e)
-        {
-            gDrapDrop.Visibility = Visibility.Visible;
-            bool dropEnabled = true;
-            if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
-            {
-                string[] filenames = e.Data.GetData(DataFormats.FileDrop, true) as string[];
 
-                foreach (string filename in filenames)
-                {
-                    if (System.IO.Path.GetExtension(filename).ToUpperInvariant() != ".AGE3YREC")
-                    {
-                        dropEnabled = false;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                dropEnabled = false;
-            }
-
-            if (!dropEnabled)
-            {
-                e.Effects = DragDropEffects.None;
-                e.Handled = true;
-            }
-        }
 
         private void SaveControlImage(FrameworkElement control,
 string filename)
@@ -232,51 +221,6 @@ string filename)
             });
         }
 
-        private void Window_DragLeave(object sender, DragEventArgs e)
-        {
-            if (Records.Count > 0)
-            {
-                gDrapDrop.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        private async void Window_Drop(object sender, DragEventArgs e)
-        {
-
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                gDrapDrop.Visibility = Visibility.Collapsed;
-                gProcessing.Visibility = Visibility.Visible;
-                bRenameAll.IsEnabled = false;
-                bOpen.IsEnabled = false;
-                // Note that you can have more than one file.
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                foreach (string file in files)
-                {
-                    if (Records.Any(x => x.RecordPath.ToLower() == file.ToLower()))
-                    {
-                        continue;
-                    }
-                    var record = new age3rec();
-                    if (await record.Read(file))
-                    {
-                        Records.Add(record);
-                    }
-                }
-                bOpen.IsEnabled = true;
-                if (Records.Count > 0)
-                {
-                    bRenameAll.IsEnabled = true;
-                    gProcessing.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    gDrapDrop.Visibility = Visibility.Visible;
-                    gProcessing.Visibility = Visibility.Collapsed;
-                    bRenameAll.IsEnabled = false;
-                }
-            }
-        }
 
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
@@ -288,6 +232,41 @@ string filename)
             e.Handled = true;
         }
 
+        private async Task readFiles(string[] filenames)
+        {
+            gProcessing.Visibility = Visibility.Visible;
+            bRenameAll.IsEnabled = false;
+            bOpen.IsEnabled = false;
+            foreach (string file in filenames)
+            {
+                if (Path.GetExtension(file).ToLower() != ".age3yrec")
+                {
+                    continue;
+                }
+
+                if (Records.Any(x => x.RecordPath.ToLower() == file.ToLower()))
+                {
+                    continue;
+                }
+                var record = new age3rec();
+                if (await record.Read(file))
+                {
+                    Records.Add(record);
+                }
+            }
+            bOpen.IsEnabled = true;
+            if (Records.Count > 0)
+            {
+                bRenameAll.IsEnabled = true;
+                gProcessing.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                bRenameAll.IsEnabled = false;
+                gProcessing.Visibility = Visibility.Collapsed;
+            }
+        }
+
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -295,67 +274,9 @@ string filename)
             openFileDialog.Multiselect = true;
             if (openFileDialog.ShowDialog() == true)
             {
-                gDrapDrop.Visibility = Visibility.Collapsed;
-                gProcessing.Visibility = Visibility.Visible;
-                bRenameAll.IsEnabled = false;
-                bOpen.IsEnabled = false;
-                foreach (string file in openFileDialog.FileNames)
-                {
-                    if (Records.Any(x=> x.RecordPath.ToLower() == file.ToLower()))
-                    {
-                        continue;
-                    }
-                    var record = new age3rec();
-                    if (await record.Read(file))
-                    {
-                        Records.Add(record);
-                    }
-                }
-                bOpen.IsEnabled = true;
-                if (Records.Count > 0)
-                {
-                    bRenameAll.IsEnabled = true;
-                    gProcessing.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    bRenameAll.IsEnabled = false;
-                    gDrapDrop.Visibility = Visibility.Visible;
-                    gProcessing.Visibility = Visibility.Collapsed;
-                }
-
-
+                await readFiles(openFileDialog.FileNames);
             }
 
-        }
-
-        private void Window_DragOver(object sender, DragEventArgs e)
-        {
-            bool dropEnabled = true;
-            if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
-            {
-                string[] filenames =
-                                 e.Data.GetData(DataFormats.FileDrop, true) as string[];
-
-                foreach (string filename in filenames)
-                {
-                    if (System.IO.Path.GetExtension(filename).ToUpperInvariant() != ".AGE3YREC")
-                    {
-                        dropEnabled = false;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                dropEnabled = false;
-            }
-
-            if (!dropEnabled)
-            {
-                e.Effects = DragDropEffects.None;
-                e.Handled = true;
-            }
         }
 
         public IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
@@ -408,7 +329,6 @@ string filename)
             Records.Remove(Records.First(x=> x.RecordPath == parameter.ToString()));
             if (Records.Count == 0)
             {
-                gDrapDrop.Visibility = Visibility.Visible;
                 bRenameAll.IsEnabled = false;
             }
         }
@@ -457,6 +377,15 @@ string filename)
             }
             bRenameAll.IsEnabled = true;
             bOpen.IsEnabled = true;
+        }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //MessageBox.Show("OpENED");
+            //await readFiles(Environment.GetCommandLineArgs());
+            var pipe = new SingleInstanceApp();
+            pipe.ReceiveLine += OnReceiveLine;
+            await pipe.StartServer("ReplayManager");
         }
     }
 

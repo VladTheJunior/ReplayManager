@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Version>0.0.4</Version>
+    <Authors>VladTheJunior</Authors>
+    <Company>VladTheJunior</Company>
+    <Copyright>VladTheJunior</Copyright>
+    <BaseOutputPath>..\publish\</BaseOutputPath>
+    <ApplicationIcon>game-age3.ico</ApplicationIcon>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\Trajan.ttf" />
+    <Resource Include="resources\audio\smallbutton.wav" />
+    <Resource Include="resources\Cursor.cur" />
+    <Resource Include="resources\progressbar_glow.png" />
+    <Resource Include="resources\progressbar_glow2.png" />
+    <Resource Include="resources\titlebar_tile.png" />
+    <Resource Include="resources\wood.png" />
+  </ItemGroup>
+
+
+	<ItemGroup>
+		<None Remove="Fonts\Trajan.ttf" />
+		<None Remove="resources\audio\smallbutton.wav" />
+		<None Remove="resources\Cursor.cur" />
+		<None Remove="resources\progressbar_glow.png" />
+		<None Remove="resources\progressbar_glow2.png" />
+		<None Remove="resources\titlebar_tile.png" />
+		<None Remove="resources\wood.png" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Content Include="game-age3.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	</ItemGroup>
+
+
+</Project>

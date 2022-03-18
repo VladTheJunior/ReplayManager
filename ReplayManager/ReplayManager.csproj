@@ -8,16 +8,72 @@
     <ApplicationIcon>game-age3.ico</ApplicationIcon>
     <Authors>VladTheJunior</Authors>
     <Copyright>VladTheJunior</Copyright>
-    <Version>0.0.3</Version>
+    <Version>0.0.4</Version>
+	  <BaseOutputPath>..\publish\</BaseOutputPath>
+	  <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="data\avatars\avatar_event0_49.png" />
+    <None Remove="data\avatars\avatar_event0_50.png" />
+    <None Remove="data\avatars\avatar_event0_51.png" />
+    <None Remove="data\avatars\avatar_event0_52.png" />
+    <None Remove="data\avatars\avatar_event0_53.png" />
+    <None Remove="data\avatars\avatar_event0_54.png" />
+    <None Remove="data\avatars\avatar_event0_55.png" />
+    <None Remove="data\avatars\avatar_event0_56.png" />
+    <None Remove="data\cards\greenwich_time.png" />
+    <None Remove="data\cards\hc_cav_archer_icon.png" />
+    <None Remove="data\cards\hc_crossbow_icon.png" />
+    <None Remove="data\cards\hc_dragoon_icon.png" />
+    <None Remove="data\cards\hc_grenadier_icon.png" />
+    <None Remove="data\cards\hc_halberdier_icon.png" />
+    <None Remove="data\cards\hc_highlander_icon.png" />
+    <None Remove="data\cards\hc_light_cavalry_icon.png" />
+    <None Remove="data\cards\hc_longbow_icon.png" />
+    <None Remove="data\cards\hc_musketeer_icon.png" />
+    <None Remove="data\cards\hc_pikeman_icon.png" />
+    <None Remove="data\cards\hc_skirmisher_icon.png" />
+    <None Remove="data\cards\infinite_battleship.png" />
+    <None Remove="data\cards\infinite_longbow.png" />
+    <None Remove="data\cards\rangers.png" />
+    <None Remove="data\cards\siege_archery.png" />
+    <None Remove="data\maps\arabia_mini.png" />
+    <None Remove="data\maps\congo_basin_mini.png" />
+    <None Remove="data\maps\saharan_routes_lost_mini.png" />
     <None Remove="resources\rename_icon.png" />
   </ItemGroup>
 
  
 
   <ItemGroup>
+    <Resource Include="data\avatars\avatar_event0_49.png" />
+    <Resource Include="data\avatars\avatar_event0_50.png" />
+    <Resource Include="data\avatars\avatar_event0_51.png" />
+    <Resource Include="data\avatars\avatar_event0_52.png" />
+    <Resource Include="data\avatars\avatar_event0_53.png" />
+    <Resource Include="data\avatars\avatar_event0_54.png" />
+    <Resource Include="data\avatars\avatar_event0_55.png" />
+    <Resource Include="data\avatars\avatar_event0_56.png" />
+    <Resource Include="data\cards\greenwich_time.png" />
+    <Resource Include="data\cards\hc_cav_archer_icon.png" />
+    <Resource Include="data\cards\hc_crossbow_icon.png" />
+    <Resource Include="data\cards\hc_dragoon_icon.png" />
+    <Resource Include="data\cards\hc_grenadier_icon.png" />
+    <Resource Include="data\cards\hc_halberdier_icon.png" />
+    <Resource Include="data\cards\hc_highlander_icon.png" />
+    <Resource Include="data\cards\hc_light_cavalry_icon.png" />
+    <Resource Include="data\cards\hc_longbow_icon.png" />
+    <Resource Include="data\cards\hc_musketeer_icon.png" />
+    <Resource Include="data\cards\hc_pikeman_icon.png" />
+    <Resource Include="data\cards\hc_skirmisher_icon.png" />
+    <Resource Include="data\cards\infinite_battleship.png" />
+    <Resource Include="data\cards\infinite_longbow.png" />
+    <Resource Include="data\cards\rangers.png" />
+    <Resource Include="data\cards\siege_archery.png" />
+    <Resource Include="data\maps\arabia_mini.png" />
+    <Resource Include="data\maps\congo_basin_mini.png" />
+    <Resource Include="data\maps\saharan_routes_lost_mini.png" />
     <Resource Include="game-age3.ico" />
   </ItemGroup>
 
@@ -1513,7 +1569,6 @@
     <Resource Include="data\maps\punjab_mini.png" />
     <Resource Include="data\maps\regicide_mini.png" />
     <Resource Include="data\maps\rockies_mini.png" />
-    <Resource Include="data\maps\saguenay_lrg_mini.png" />
     <Resource Include="data\maps\saguenay_mini.png" />
     <Resource Include="data\maps\saharan_routes_mini.png" />
     <Resource Include="data\maps\sahel_mini.png" />

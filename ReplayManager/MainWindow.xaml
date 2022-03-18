@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReplayManager"
         mc:Ignorable="d"
-        AllowDrop="True"
             FontFamily="/Fonts/#Trajan Pro 3"
     FontSize="14"
         WindowStyle="None"
@@ -14,7 +13,7 @@
         ResizeMode="NoResize"
             UseLayoutRounding="True"
     WindowStartupLocation="CenterScreen"
-        Title="{Binding Path=SelectedItem.RecordPathFileName, ElementName=tbRecords, StringFormat='{}Replay Manager - {0}', TargetNullValue='Replay Manager', FallbackValue='Replay Manager'}" Height="772" Width="1142" DragEnter="Window_DragEnter" DragLeave="Window_DragLeave" Drop="Window_Drop" DragOver="Window_DragOver">
+        Title="{Binding Path=SelectedItem.RecordPathFileName, ElementName=tbRecords, StringFormat='{}Replay Manager - {0}', TargetNullValue='Replay Manager', FallbackValue='Replay Manager'}" Height="772" Width="1142" Loaded="Window_Loaded">
     <Window.Resources>
         <local:StringToColorConverter x:Key="StringToColorConverter" />
         <local:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
@@ -62,7 +61,7 @@
                             FontSize="24"
                             FontWeight="Bold"
                             Foreground="{StaticResource ButtonTextGradient}"
-                            Text="Replay Manager v0.0.3">
+                            Text="Replay Manager v0.0.4">
                     <TextBlock.Effect>
                         <DropShadowEffect
                                     BlurRadius="3"
@@ -1087,18 +1086,6 @@
                 </TabControl.ContentTemplate>
             </TabControl>
            
-
-            <Grid x:Name="gDrapDrop"  Background="{StaticResource wood_tile}" >
-                <Grid Background="#6f000000">
-                    <StackPanel VerticalAlignment="Center">
-    
-                        <TextBlock Style="{StaticResource CampaignTitleTextBlockStyle}" Text="Drop .age3Yrec files here!"  FontSize="50" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center"/>
-                        <TextBlock Style="{StaticResource CampaignTitleTextBlockStyle}" Text="or"  FontSize="36" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center"/>
-                        <Button Width="256" Style="{StaticResource MainMenuButton}" Content="Browse Files" Click="Button_Click"/>
-                    </StackPanel>
-                </Grid>
-            </Grid>
-
             <Grid x:Name="gProcessing" Background="{StaticResource wood_tile}" Visibility="Collapsed" >
                 <Grid Background="#6f000000">
                     <StackPanel VerticalAlignment="Center">

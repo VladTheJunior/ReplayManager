@@ -1,0 +1,1206 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:ReplayManagerUpdater">
+    <!--#region Content-->
+    <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
+    <SolidColorBrush x:Key="NormalBorderBrush" Color="#888" />
+    <SolidColorBrush x:Key="SolidBorderBrush" Color="#888" />
+    <SolidColorBrush x:Key="HorizontalNormalBorderBrush" Color="#888" />
+    <SolidColorBrush x:Key="DisabledBorderBrush" Color="#AAA" />
+    <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="Gray" />
+
+    <SolidColorBrush x:Key="NormalBrush" Color="#888" />
+    <SolidColorBrush x:Key="GlyphBrush" Color="#444" />
+
+
+
+
+    <!--  Defining Button resource_gold  -->
+
+
+
+    <LinearGradientBrush x:Key="PanelBGStrokeGradientVertical" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#b8a444" />
+        <GradientStop Offset="0.35" Color="#f7e79a" />
+        <GradientStop Offset="0.5" Color="#fff8d9" />
+        <GradientStop Offset="0.65" Color="#f7e79a" />
+        <GradientStop Offset="1" Color="#b8a444" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="PressedBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Offset="0.0" Color="#BBB" />
+                <GradientStop Offset="0.1" Color="#EEE" />
+                <GradientStop Offset="0.9" Color="#EEE" />
+                <GradientStop Offset="1.0" Color="#FFF" />
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!--  TextBox Gradients  -->
+    <LinearGradientBrush x:Key="TextboxStrokeGradient" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#504c41" />
+        <GradientStop Offset="0.5" Color="#afa898" />
+        <GradientStop Offset="1" Color="#504c41" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="TextboxInnerGradient" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#271c10" />
+        <GradientStop Offset="1" Color="#130b02" />
+    </LinearGradientBrush>
+    <!--  Combobox Gradients  -->
+    <LinearGradientBrush x:Key="ComboBoxStrokeGradient" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#4f4731" />
+        <GradientStop Offset="0.5" Color="#b79f66" />
+        <GradientStop Offset="1" Color="#4f4731" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ComboBoxStrokeGradientOver" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#776a45" />
+        <GradientStop Offset="0.5" Color="#d3b367" />
+        <GradientStop Offset="1" Color="#776a45" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ComboBoxStrokeGradientSelected" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#9f894d" />
+        <GradientStop Offset="0.5" Color="#f2cb6d" />
+        <GradientStop Offset="1" Color="#9f894d" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ComboBoxInnerGradient" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#382817" />
+        <GradientStop Offset="1" Color="#251504" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ComboBoxInnerGradientOver" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#503921" />
+        <GradientStop Offset="1" Color="#351e06" />
+    </LinearGradientBrush>
+
+
+    <LinearGradientBrush x:Key="ButtonStrokeGradient" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#a58739" />
+        <GradientStop Offset="0.5" Color="#fee5a4" />
+        <GradientStop Offset="1" Color="#a58739" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ButtonInnerGradient" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#2a1108" />
+        <GradientStop Offset="0.2" Color="#502211" />
+        <GradientStop Offset="0.5" Color="#532312" />
+        <GradientStop Offset="0.8" Color="#502211" />
+        <GradientStop Offset="1" Color="#2a1108" />
+    </LinearGradientBrush>
+
+    <!--  Defining Main Menu button  -->
+    <LinearGradientBrush x:Key="MainMenuButtonStrokeGradient" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#755f22" />
+        <GradientStop Offset="0.25" Color="#ceb165" />
+        <GradientStop Offset="0.5" Color="#ffe6a6" />
+        <GradientStop Offset="0.25" Color="#ceb165" />
+        <GradientStop Offset="1" Color="#755f22" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="MainMenuButtonStrokeGradientOver" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#a48632" />
+        <GradientStop Offset="0.25" Color="#ffd974" />
+        <GradientStop Offset="0.5" Color="#fff9e9" />
+        <GradientStop Offset="0.25" Color="#ffd974" />
+        <GradientStop Offset="1" Color="#a48632" />
+    </LinearGradientBrush>
+
+
+
+    <LinearGradientBrush x:Key="MainMenuButtonStrokeGradientDisabled" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#5b5b5b" />
+        <GradientStop Offset="0.25" Color="#c0c0c0" />
+        <GradientStop Offset="0.5" Color="#f9f9f9" />
+        <GradientStop Offset="0.25" Color="#c0c0c0" />
+        <GradientStop Offset="1" Color="#5b5b5b" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="MainMenuButtonInnerGradient" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#170803" />
+        <GradientStop Offset="0.15" Color="#3b190d" />
+        <GradientStop Offset="0.40" Color="#532412" />
+        <GradientStop Offset="0.60" Color="#532412" />
+        <GradientStop Offset="0.85" Color="#3b190d" />
+        <GradientStop Offset="1" Color="#170803" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="MainMenuButtonInnerGradientOver" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#2e0f05" />
+        <GradientStop Offset="0.15" Color="#511f0d" />
+        <GradientStop Offset="0.40" Color="#75351c" />
+        <GradientStop Offset="0.60" Color="#75351c" />
+        <GradientStop Offset="0.85" Color="#511f0d" />
+        <GradientStop Offset="1" Color="#2e0f05" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="MainMenuButtonInnerGradientPress" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#3e1001" />
+        <GradientStop Offset="0.15" Color="#661e05" />
+        <GradientStop Offset="0.40" Color="#a73e16" />
+        <GradientStop Offset="0.60" Color="#a73e16" />
+        <GradientStop Offset="0.85" Color="#661e05" />
+        <GradientStop Offset="1" Color="#3e1001" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="MainMenuButtonInnerGradientDisabled" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#141414" />
+        <GradientStop Offset="0.15" Color="#393939" />
+        <GradientStop Offset="0.40" Color="#535353" />
+        <GradientStop Offset="0.60" Color="#535353" />
+        <GradientStop Offset="0.85" Color="#393939" />
+        <GradientStop Offset="1" Color="#141414" />
+    </LinearGradientBrush>
+
+    <!--  Defining Text colours  -->
+    <LinearGradientBrush x:Key="ButtonTextGradient" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#ffea9e" />
+        <GradientStop Offset="1" Color="#e8c760" />
+        <GradientStop Offset="2" Color="#cda440" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ButtonTextGradient2" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#cbb77c" />
+        <GradientStop Offset="1" Color="#b69a50" />
+        <GradientStop Offset="2" Color="#a4843c" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ButtonTextGradient3" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FFBFB6A5" />
+        <GradientStop Offset="1" Color="#FF494742" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ButtonTextGradientOver" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#fff5d2" />
+        <GradientStop Offset="1" Color="#f3dd9a" />
+        <GradientStop Offset="2" Color="#ebc15c" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ButtonTextGradientDisabled" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#ffffff" />
+        <GradientStop Offset="1" Color="#b2b2b2" />
+    </LinearGradientBrush>
+    <!--  Skirmish, Home City Creator, Info Name  -->
+    <Style x:Key="hcInfoName" TargetType="{x:Type TextBox}">
+        <Setter Property="Height" Value="40" />
+        <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3" />
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="#d5d5d5" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="MaxLength" Value="64" />
+        <!--  broken in WPFG  -->
+        <Setter Property="CaretBrush" Value="White" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border
+                        x:Name="Border"
+                        Height="40"
+                        Padding="6,0,0,0"
+                        Background="{StaticResource TextboxInnerGradient}"
+                        BorderBrush="{StaticResource TextboxStrokeGradient}"
+                        BorderThickness="2"
+                        CornerRadius="4">
+                        <ScrollViewer
+                            x:Name="PART_ContentHost"
+                            Margin="0"
+                            HorizontalScrollBarVisibility="Hidden"
+                            VerticalScrollBarVisibility="Hidden" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="#FFDADADA" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                    BlurRadius="10"
+                    Direction="-90"
+                    RenderingBias="Quality"
+                    ShadowDepth="1.5"
+                    Color="Black" />
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+
+
+
+    <!--  Defining ToolTip Sizes  -->
+    <Style TargetType="ToolTip">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="MaxWidth" Value="500" />
+        <Setter Property="FontFamily" Value="Open Sans" />
+        <Setter Property="Foreground" Value="#d6c894" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="HasDropShadow" Value="True" />
+        <Setter Property="VerticalOffset" Value="15" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Border
+                        x:Name="Border"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        Background="#34221c"
+                        BorderBrush="#6f683f"
+                        BorderThickness="1">
+                        <ContentPresenter
+                            Margin="7,5,7,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow" Value="true">
+                            <Setter TargetName="Border" Property="CornerRadius" Value="4" />
+                            <Setter TargetName="Border" Property="SnapsToDevicePixels" Value="true" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Resources>
+            <Style TargetType="ContentPresenter">
+                <Style.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="TextWrapping" Value="Wrap" />
+                    </Style>
+                </Style.Resources>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+
+
+    <Style x:Key="RegularTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                    BlurRadius="3"
+                    Direction="-90"
+                    RenderingBias="Quality"
+                    ShadowDepth="3"
+                    Color="Black" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <Style x:Key="MainMenuButtonFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid
+                        Name="focusborder"
+                        Width="auto"
+                        Height="40"
+                        MinWidth="100">
+                        <Grid Name="buttoncontainer" RenderTransformOrigin="0.5, 0.5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RenderTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1" />
+                            </Grid.RenderTransform>
+
+                            <Rectangle
+                                Name="strokeblack"
+                                Grid.ColumnSpan="3"
+                                Height="40"
+                                Fill="Transparent"
+                                RadiusX="5"
+                                RadiusY="5"
+                                Stroke="Black"
+                                StrokeThickness="4" />
+
+                            <Rectangle
+                                Name="strokegold"
+                                Grid.Column="1"
+                                Height="38"
+                                Fill="Transparent"
+                                RadiusX="5"
+                                RadiusY="5"
+                                Stroke="Red"
+                                StrokeThickness="2" />
+
+                            <Rectangle
+                                Name="strokegoldover"
+                                Grid.Column="1"
+                                Height="38"
+                                Fill="Transparent"
+                                Opacity="0"
+                                RadiusX="5"
+                                RadiusY="5"
+                                Stroke="{StaticResource MainMenuButtonStrokeGradientOver}"
+                                StrokeThickness="2" />
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MainMenuButton" TargetType="{x:Type Button}">
+        <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True" />
+
+        <Setter Property="RenderTransformOrigin" Value="0.5, 0.5" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <ScaleTransform ScaleX="1" ScaleY="1" />
+            </Setter.Value>
+        </Setter>
+
+        <!--<Setter Property="FocusVisualStyle" Value="{StaticResource MainMenuButtonFocusVisual}"/>-->
+
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <!--  TMRESMI: This should be either empty or have something in it, but don't delete it wholesale.  -->
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Background" Value="{StaticResource MainMenuButtonInnerGradient}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid
+                        Name="test"
+                        Width="auto"
+                        Height="40"
+                        MinWidth="100">
+                        <Grid Name="buttoncontainer" RenderTransformOrigin="0.5, 0.5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="1" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RenderTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1" />
+                            </Grid.RenderTransform>
+
+                            <Rectangle
+                                Name="background"
+                                Grid.Column="1"
+                                Height="38"
+                                Fill="{StaticResource ButtonInnerGradient}"
+                                RadiusX="5"
+                                RadiusY="5" />
+
+                            <Rectangle
+                                Name="highlightover"
+                                Grid.Column="1"
+                                Height="38"
+                                Fill="{StaticResource MainMenuButtonInnerGradientOver}"
+                                Opacity="0"
+                                RadiusX="5"
+                                RadiusY="5" />
+
+                            <Rectangle
+                                Name="highlightpress"
+                                Grid.Column="1"
+                                Height="38"
+                                Fill="{StaticResource MainMenuButtonInnerGradientPress}"
+                                Opacity="0"
+                                RadiusX="5"
+                                RadiusY="5" />
+
+                            <Rectangle
+                                Name="strokeblack"
+                                Grid.ColumnSpan="3"
+                                Height="40"
+                                Fill="Transparent"
+                                RadiusX="5"
+                                RadiusY="5"
+                                Stroke="Black"
+                                StrokeThickness="3" />
+
+                            <Rectangle
+                                Name="strokegold"
+                                Grid.Column="1"
+                                Height="38"
+                                Fill="Transparent"
+                                RadiusX="5"
+                                RadiusY="5"
+                                Stroke="{StaticResource ButtonStrokeGradient}"
+                                StrokeThickness="2" />
+
+                            <Rectangle
+                                Name="strokegoldover"
+                                Grid.Column="1"
+                                Height="38"
+                                Fill="Transparent"
+                                Opacity="0"
+                                RadiusX="5"
+                                RadiusY="5"
+                                Stroke="{StaticResource MainMenuButtonStrokeGradientOver}"
+                                StrokeThickness="2" />
+                        </Grid>
+
+                        <TextBlock
+                            Name="ButtonText"
+                            Grid.Column="1"
+                            Margin="5,5,5,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="18"
+                            Foreground="{StaticResource ButtonTextGradient}"
+                            Text="{TemplateBinding Content}" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <StopStoryboard BeginStoryboardName="MouseOverStoryBoard" />
+                                <StopStoryboard BeginStoryboardName="MouseOverStoryBoard2" />
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="buttoncontainer"
+                                            Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                            To="1"
+                                            Duration="0:0:.05" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="buttoncontainer"
+                                            Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                            To="1"
+                                            Duration="0:0:.05" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="highlightpress"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.05" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="strokegoldover"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.05" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                                <!--<SoundPlayerAction Source="resources/audio/smallbutton.wav" />-->
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="buttoncontainer"
+                                            Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                            To="1.05"
+                                            Duration="0:0:.05" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="buttoncontainer"
+                                            Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                            To="1.05"
+                                            Duration="0:0:.05" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="buttoncontainer"
+                                            Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                            To="1.05"
+                                            Duration="0:0:.05" />
+                                        <DoubleAnimation
+                                            AutoReverse="True"
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="highlightpress"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.6" />
+                                        <DoubleAnimation
+                                            AutoReverse="True"
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="strokegoldover"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.6" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <Setter TargetName="ButtonText" Property="Foreground" Value="{StaticResource ButtonTextGradientOver}" />
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <StopStoryboard BeginStoryboardName="FocusStoryBoard" />
+                                <StopStoryboard BeginStoryboardName="FocusStoryBoard2" />
+                                <BeginStoryboard Name="MouseOverStoryBoard">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="buttoncontainer"
+                                            Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                            To="1.05"
+                                            Duration="0:0:.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="buttoncontainer"
+                                            Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                            To="1.05"
+                                            Duration="0:0:.2" />
+                                        <DoubleAnimation
+                                            AutoReverse="True"
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="highlightpress"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.6" />
+                                        <DoubleAnimation
+                                            AutoReverse="True"
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="strokegoldover"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.6" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                                <!--<SoundPlayerAction Source="resources/audio/mouseover_00.wav" />-->
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="FocusStoryBoard" />
+                                <StopStoryboard BeginStoryboardName="FocusStoryBoard2" />
+                                <BeginStoryboard Name="MouseOverStoryBoard2">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="buttoncontainer"
+                                            Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                            To="1"
+                                            Duration="0:0:.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="buttoncontainer"
+                                            Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                            To="1"
+                                            Duration="0:0:.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="highlightpress"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="strokegoldover"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <Setter TargetName="ButtonText" Property="Foreground" Value="{StaticResource ButtonTextGradientOver}" />
+                        </Trigger>
+
+                        <Trigger Property="Button.IsFocused" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Name="FocusStoryBoard">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="buttoncontainer"
+                                            Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                            To="1.05"
+                                            Duration="0:0:.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="buttoncontainer"
+                                            Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                            To="1.05"
+                                            Duration="0:0:.2" />
+                                        <DoubleAnimation
+                                            AutoReverse="True"
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="highlightpress"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.6" />
+                                        <DoubleAnimation
+                                            AutoReverse="True"
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="strokegoldover"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.6" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                                <!--<SoundPlayerAction Source="resources/audio/mouseover_00.wav" />-->
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Name="FocusStoryBoard2">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="buttoncontainer"
+                                            Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                            To="1"
+                                            Duration="0:0:.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="buttoncontainer"
+                                            Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                            To="1"
+                                            Duration="0:0:.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="highlightpress"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="strokegoldover"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <Setter TargetName="ButtonText" Property="Foreground" Value="{StaticResource ButtonTextGradientOver}" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ButtonText" Property="Foreground" Value="{StaticResource ButtonTextGradient3}" />
+                            <Setter TargetName="background" Property="Fill" Value="{StaticResource MainMenuButtonInnerGradientDisabled}" />
+                            <Setter TargetName="strokegold" Property="Stroke" Value="{StaticResource MainMenuButtonStrokeGradientDisabled}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <LinearGradientBrush x:Key="ScrollbarGradient" StartPoint="0,0" EndPoint="0,1">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Offset="0.0" Color="#a08116" />
+                <GradientStop Offset="0.5" Color="#f4e09b" />
+                <GradientStop Offset="1.0" Color="#a08116" />
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+
+
+
+
+    <!--  ListView Item Gradients  -->
+    <LinearGradientBrush x:Key="ListViewItemGradient" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#332613" />
+        <GradientStop Offset="1" Color="#251b0d" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ListViewItemGradientOver" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#382b17" />
+        <GradientStop Offset="1" Color="#352815" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ListViewItemGradientSelected" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#69512d" />
+        <GradientStop Offset="1" Color="#44351d" />
+    </LinearGradientBrush>
+
+    <!--  Semi-Transparent ListView Item Gradients  -->
+    <LinearGradientBrush x:Key="ListViewItemGradient2" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#80000000" />
+        <GradientStop Offset="1" Color="#80000000" />
+    </LinearGradientBrush>
+
+
+
+
+
+
+
+    <Style x:Key="PanelBGSection" TargetType="{x:Type Rectangle}">
+        <Setter Property="Fill" Value="#800e0b0b" />
+        <Setter Property="Opacity" Value="0.65" />
+        <Setter Property="RadiusX" Value="5" />
+        <Setter Property="RadiusY" Value="5" />
+        <Setter Property="Stroke" Value="#8049381f" />
+        <Setter Property="StrokeThickness" Value="4" />
+    </Style>
+
+
+    <Style x:Key="WindowStyle" TargetType="Window">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Window">
+                    <Border Background="{TemplateBinding Background}">
+                        <AdornerDecorator>
+                            <ContentPresenter />
+                        </AdornerDecorator>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="WindowState" Value="Maximized" />
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="ResizeMode" Value="NoResize" />
+        <!--<Setter Property="UseLayoutRounding" Value="True" />-->
+    </Style>
+
+    <!--  Defining Frame properties  -->
+    <Style TargetType="Frame">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Frame">
+                    <ContentPresenter />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ViewboxMain" TargetType="Viewbox">
+        <Setter Property="Stretch" Value="Uniform" />
+    </Style>
+
+
+
+
+    <ImageBrush x:Key="titlebarbg" ImageSource="/resources/titlebar_tile.png" />
+
+    <LinearGradientBrush x:Key="TitlebarGradientOverlay" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#090807" />
+        <GradientStop Offset="0.25" Color="#cfab7f" />
+        <GradientStop Offset="0.75" Color="#cfab7f" />
+        <GradientStop Offset="1" Color="#090807" />
+    </LinearGradientBrush>
+    <ControlTemplate x:Key="Titlebar">
+        <Grid Height="50" VerticalAlignment="Top">
+            <Rectangle Fill="{StaticResource titlebarbg}" />
+            <Rectangle Fill="{StaticResource TitlebarGradientOverlay}" Opacity="0.25" />
+            <Rectangle
+                Height="4"
+                VerticalAlignment="Bottom"
+                Fill="Black" />
+            <Rectangle
+                Height="2"
+                Margin="0,0,0,1"
+                VerticalAlignment="Bottom"
+                Fill="{StaticResource ButtonStrokeGradient}" />
+        </Grid>
+    </ControlTemplate>
+
+
+    <Style x:Key="CampaignRegularTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                    BlurRadius="2"
+                    Direction="-90"
+                    RenderingBias="Quality"
+                    ShadowDepth="1"
+                    Color="Black" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+
+    <LinearGradientBrush x:Key="TitleGradient" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#ffea9e" />
+        <GradientStop Offset="1" Color="#cda440" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="SubtitleGradient" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#AE8E50" />
+        <GradientStop Offset="1" Color="#9D782D" />
+    </LinearGradientBrush>
+    <Style x:Key="SubTitleTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="Foreground" Value="{StaticResource SubtitleGradient}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                    BlurRadius="2"
+                    Direction="-90"
+                    RenderingBias="Quality"
+                    ShadowDepth="1"
+                    Color="Black" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MainTitleTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="/Fonts/#Trajan Pro 3" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="Foreground" Value="{StaticResource TitleGradient}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                    BlurRadius="3"
+                    Direction="-90"
+                    RenderingBias="Quality"
+                    ShadowDepth="3"
+                    Color="Black" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="SubMenuBackButton" TargetType="Button">
+
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Height" Value="35" />
+        <Setter Property="Width" Value="600" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True" />
+
+        <Setter Property="RenderTransformOrigin" Value="0.5, 0.5" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <ScaleTransform ScaleX="1" ScaleY="1" />
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                    BlurRadius="4"
+                    Direction="-90"
+                    RenderingBias="Quality"
+                    ShadowDepth="1.5"
+                    Color="Black" />
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid
+                        Width="600"
+                        Height="35"
+                        Margin="5,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top">
+                        <StackPanel Orientation="Horizontal">
+                            <Grid Width="27" Height="27">
+                                <Image
+                                    Name="backbutton"
+                                    Height="27"
+                                    Source="/resources/button_back_normal.png"
+                                    Stretch="Uniform" />
+                                <Image
+                                    Name="backbuttonhover"
+                                    Height="27"
+                                    Opacity="0"
+                                    Source="/resources/button_back_hover.png"
+                                    Stretch="Uniform" />
+                            </Grid>
+
+                            <Rectangle
+                                Name="divider"
+                                Width="2"
+                                Height="25"
+                                Margin="5,0,0,0"
+                                Fill="#e7c169"
+                                Opacity="0.5" />
+
+                            <TextBlock
+                                Name="backtext"
+                                Height="30"
+                                Margin="10,7,0,0"
+                                VerticalAlignment="Center"
+                                FontFamily="/Fonts/#Trajan Pro 3"
+                                FontSize="25"
+                                FontWeight="Bold"
+                                Text="{Binding Path=Content, RelativeSource={RelativeSource AncestorType={x:Type Button}}}">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush x:Name="ButtonTextBrush" Color="#edcc63" />
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Name="MouseOverStoryBoard">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="divider"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="backbuttonhover"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.75"
+                                            Duration="0:0:.2" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ButtonTextBrush"
+                                            Storyboard.TargetProperty="Color"
+                                            To="#fce496"
+                                            Duration="0:0:.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Name="MouseOverStoryBoard2">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="divider"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.5"
+                                            Duration="0:0:.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="backbuttonhover"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.2" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ButtonTextBrush"
+                                            Storyboard.TargetProperty="Color"
+                                            To="#edcc63"
+                                            Duration="0:0:.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <Trigger Property="IsFocused" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="divider"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="backbuttonhover"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.75"
+                                            Duration="0:0:.2" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ButtonTextBrush"
+                                            Storyboard.TargetProperty="Color"
+                                            To="#fce496"
+                                            Duration="0:0:.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="divider"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.5"
+                                            Duration="0:0:.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="backbuttonhover"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:.2" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ButtonTextBrush"
+                                            Storyboard.TargetProperty="Color"
+                                            To="#edcc63"
+                                            Duration="0:0:.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True" />
+
+                        <EventTrigger RoutedEvent="PreviewMouseDown">
+                            <!--<SoundPlayerAction Source="resources/audio/smallbutton.wav" />-->
+                        </EventTrigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <!--  Main Panel Gradients  -->
+    <LinearGradientBrush x:Key="PanelBGStrokeGradient" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#b8a444" />
+        <GradientStop Offset="0.35" Color="#f7e79a" />
+        <GradientStop Offset="0.5" Color="#fff8d9" />
+        <GradientStop Offset="0.65" Color="#f7e79a" />
+        <GradientStop Offset="1" Color="#b8a444" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="PanelBGStrokeGradientGreen" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FF69B844" />
+        <GradientStop Offset="0.35" Color="#FF9AF79A" />
+        <GradientStop Offset="0.5" Color="#FFDEFFD9" />
+        <GradientStop Offset="0.65" Color="#FFA2F79A" />
+        <GradientStop Offset="1" Color="#FF4FB844" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="PanelBGStrokeGradientRed" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FFB84444" />
+        <GradientStop Offset="0.35" Color="#FFF79A9A" />
+        <GradientStop Offset="0.5" Color="#FFFFD9D9" />
+        <GradientStop Offset="0.65" Color="#FFF79A9A" />
+        <GradientStop Offset="1" Color="#FFB84444" />
+    </LinearGradientBrush>
+
+
+
+    <LinearGradientBrush x:Key="HorizontalLightBrush" StartPoint="0,0" EndPoint="1,0">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Offset="0.0" Color="#FFF" />
+                <GradientStop Offset="1.0" Color="#EEE" />
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LightBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Offset="0.0" Color="#7d5f3a" />
+                <GradientStop Offset="1.0" Color="#7d5f3a" />
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+
+
+    <LinearGradientBrush x:Key="ProgressBarGradient" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#7bf7ff" />
+        <GradientStop Offset="1" Color="#13c0cb" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ProgressAgeBarGradient" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FF6AB44D" />
+        <GradientStop Offset="1" Color="#FF156408" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ProgressBarStrokeGradient" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#b59e3c" />
+        <GradientStop Offset="0.5" Color="#f6ebaa" />
+        <GradientStop Offset="1" Color="#b59e3c" />
+    </LinearGradientBrush>
+
+    <ControlTemplate x:Key="ProgressGlow">
+        <Grid>
+            <Rectangle
+                Width="100"
+                Height="100"
+                RenderTransformOrigin="0.5,0.5"
+                Stretch="Fill">
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="/resources/progressbar_glow.png" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </Grid>
+    </ControlTemplate>
+
+    <!--  Defining ProgressBar  -->
+    <Style x:Key="{x:Type ProgressBar}" TargetType="{x:Type ProgressBar}">
+        <Setter Property="Height" Value="35" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid MinWidth="200" MinHeight="14">
+                        <Border
+                            Height="28"
+                            Margin="2,2,0,0"
+                            Background="#23201b"
+                            BorderBrush="Black"
+                            BorderThickness="3"
+                            CornerRadius="5"
+                            Opacity="0.5" />
+                        <Border
+                            x:Name="PART_Track"
+                            Height="28"
+                            Margin="2"
+                            Background="#23201b"
+                            BorderBrush="{StaticResource ProgressBarStrokeGradient}"
+                            BorderThickness="3"
+                            CornerRadius="4" />
+
+                        <Decorator
+                            x:Name="PART_Indicator"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Rectangle
+                                    Grid.Column="0"
+                                    Height="17"
+                                    Margin="7,1,5,0"
+                                    VerticalAlignment="Center"
+                                    Fill="{StaticResource ProgressBarGradient}"
+                                    RadiusX="2"
+                                    RadiusY="2" />
+                                <!--<ContentControl Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,-45,0" Template="{StaticResource ProgressGlow}" />-->
+                            </Grid>
+                        </Decorator>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ProgressBar_Mini" TargetType="{x:Type ProgressBar}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid MinWidth="200" MinHeight="14">
+                        <Border
+                            x:Name="PART_Track"
+                            Background="#23201b"
+                            BorderBrush="{StaticResource ProgressBarStrokeGradient}"
+                            BorderThickness="2"
+                            CornerRadius="4" />
+                        <Border
+                            x:Name="PART_Indicator"
+                            Margin="4"
+                            HorizontalAlignment="Left"
+                            Background="{StaticResource ProgressBarGradient}"
+                            BorderBrush="#23201b"
+                            BorderThickness="0"
+                            CornerRadius="3" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+
+</ResourceDictionary>

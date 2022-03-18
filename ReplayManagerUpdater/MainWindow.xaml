@@ -1,0 +1,90 @@
+﻿<Window
+    x:Class="ReplayManagerUpdater.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ReplayManagerUpdater"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Replay Manager Updater"
+    Width="570"
+    Height="256"
+    AllowsTransparency="True"
+    Background="Transparent"
+    Loaded="Window_Loaded"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d" PreviewMouseLeftButtonDown="Window_PreviewMouseLeftButtonDown" >
+    <Border
+        BorderBrush="Black"
+        BorderThickness="1"
+        CornerRadius="4">
+
+        <Border
+            BorderBrush="{StaticResource MainMenuButtonStrokeGradient}"
+            BorderThickness="2"
+            CornerRadius="4">
+            <Grid>
+                <Grid.Background>
+                    <ImageBrush ImageSource="resources/wood.png" />
+                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    x:Name="CampaignTitleName"
+                    Margin="0,20"
+                    HorizontalAlignment="Center"
+                    FontSize="58"
+                    Style="{StaticResource MainTitleTextBlockStyle}"
+                    Text="Replay Manager"
+                    TextAlignment="Center" />
+                <TextBlock
+                    
+                    Grid.Row="0"
+                    Margin="0,90,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontFamily="/Fonts/#Trajan Pro 3"
+                    FontSize="20"
+                    Foreground="White"
+                    Text="{Binding ProgressText}"
+                    TextDecorations="{x:Null}" />
+                <TextBlock
+                    
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontFamily="/Fonts/#Trajan Pro 3"
+                    FontSize="20"
+                    Foreground="White"
+                    Text="{Binding UpdateName}"
+                    TextDecorations="{x:Null}" />
+                <TextBlock
+                    
+                    Grid.Row="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontFamily="/Fonts/#Trajan Pro 3"
+                    FontSize="20"
+                    Foreground="White"
+                    Text="{Binding Downloaded}"
+                    TextDecorations="{x:Null}" />
+
+
+                <ProgressBar
+                    Grid.Row="3"
+                    Width="520"
+                    Height="32"
+                    Background="Gray"
+                    BorderBrush="Gold"
+                    Foreground="Cyan"
+                    Style="{StaticResource ProgressBar_Mini}"
+                    Value="{Binding Progress}" Maximum="1" />
+            </Grid>
+        </Border>
+    </Border>
+</Window>

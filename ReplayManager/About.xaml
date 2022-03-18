@@ -118,7 +118,7 @@
                 <Run Text="Copyright (c) 2019-2022 VladTheJunior"  FontSize="14"/>
 
                 <LineBreak/>
-                <Run Text="version: 0.0.3"  FontSize="14"/>
+                <Run Text="version: 0.0.4"  FontSize="14"/>
                         </TextBlock>
                         <TextBlock FontSize="14" Style="{StaticResource subInfoLeft}" TextWrapping="WrapWithOverflow" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >
             <LineBreak/>
