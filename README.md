@@ -2,6 +2,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/VladTheJunior/ReplayManager)](https://github.com/VladTheJunior/ReplayManager/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/VladTheJunior/ReplayManager)](https://github.com/VladTheJunior/ReplayManager/network)
 [![GitHub issues](https://img.shields.io/github/issues/VladTheJunior/ReplayManager)](https://github.com/VladTheJunior/ReplayManager/issues)
+[![.NET6](https://github.com/VladTheJunior/ReplayManager/actions/workflows/dotnet6.yml/badge.svg)](https://github.com/VladTheJunior/ReplayManager/actions/workflows/dotnet6.yml)
 [![GitHub license](https://img.shields.io/github/license/VladTheJunior/ReplayManager)](https://github.com/VladTheJunior/ReplayManager/blob/master/LICENSE)
 <!-- PROJECT LOGO -->
 <br />
