@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using Newtonsoft.Json;
 using ReplayManager.Classes;
 using ReplayManager.Classes.Records;
 using ReplayManager.Classes.XMLFormalization;

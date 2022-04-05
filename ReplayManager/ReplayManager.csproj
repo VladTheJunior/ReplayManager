@@ -8,7 +8,7 @@
     <ApplicationIcon>game-age3.ico</ApplicationIcon>
     <Authors>VladTheJunior</Authors>
     <Copyright>VladTheJunior</Copyright>
-    <Version>0.0.4</Version>
+    <Version>0.0.5</Version>
 	  <BaseOutputPath>..\publish\</BaseOutputPath>
 	  <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -75,10 +75,6 @@
     <Resource Include="data\maps\congo_basin_mini.png" />
     <Resource Include="data\maps\saharan_routes_lost_mini.png" />
     <Resource Include="game-age3.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>

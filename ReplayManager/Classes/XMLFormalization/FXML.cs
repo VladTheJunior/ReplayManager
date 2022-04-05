@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -30,7 +30,7 @@ namespace ReplayManager.Classes.XMLFormalization
                     }
                 }
             });
-            await File.WriteAllTextAsync("Units.txt", JsonConvert.SerializeObject(Units));
+            await File.WriteAllTextAsync("Units.txt", JsonSerializer.Serialize(Units));
         }
         public static async Task GenerateTechsFile(string StringTablePath, string TechTreePath)
         {
@@ -66,7 +66,7 @@ namespace ReplayManager.Classes.XMLFormalization
                     index++;
                 }
             });
-            await File.WriteAllTextAsync("Techs.txt", JsonConvert.SerializeObject(Techs));
+            await File.WriteAllTextAsync("Techs.txt", JsonSerializer.Serialize(Techs));
         }
         public static async Task GenerateDecksFile(string StringTablePath, string TechTreePath, List<string> HomecityPaths)
         {
@@ -137,7 +137,7 @@ namespace ReplayManager.Classes.XMLFormalization
                     Decks.Add(new DeckData() { Cards = Cards, CivID = civ_id });
                 }
             });
-            await File.WriteAllTextAsync("Decks.txt", JsonConvert.SerializeObject(Decks));
+            await File.WriteAllTextAsync("Decks.txt", JsonSerializer.Serialize(Decks));
         }
     }
 }

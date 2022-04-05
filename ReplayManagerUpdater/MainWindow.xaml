@@ -32,53 +32,61 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <TextBlock
                     x:Name="CampaignTitleName"
-                    Margin="0,20"
+                    Margin="20,20,20,0"
                     HorizontalAlignment="Center"
                     FontSize="58"
                     Style="{StaticResource MainTitleTextBlockStyle}"
                     Text="Replay Manager"
                     TextAlignment="Center" />
+
+
+
+                <TextBlock  Grid.Row="1"     Margin="20,0"               FontFamily="/Fonts/#Trajan Pro 3"
+                    FontSize="14"
+                    Foreground="White" Text="{Binding CurrentVersion, Mode=OneWay, StringFormat='{}current version: {0}', FallbackValue='current version: unknown'}" />
+                <TextBlock  Margin="20,0"   Grid.Row="2"                 FontFamily="/Fonts/#Trajan Pro 3"
+                    FontSize="14"
+                    Foreground="White">
+                <Run  Text="available version:" />
+                <Hyperlink NavigateUri="{Binding AvailableVersionUrl, Mode=OneWay}" RequestNavigate="Hyperlink_RequestNavigate" Cursor="Hand">
+                    <Run  Text="{Binding AvailableVersion, TargetNullValue='unknown'}" />
+                </Hyperlink>
+                </TextBlock>
                 <TextBlock
                     
-                    Grid.Row="0"
-                    Margin="0,90,0,0"
-                    HorizontalAlignment="Center"
+                    Grid.Row="3"
+                    Margin="20,20,20,0"
+                    HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     FontFamily="/Fonts/#Trajan Pro 3"
-                    FontSize="20"
+                    FontSize="14"
                     Foreground="White"
                     Text="{Binding ProgressText}"
                     TextDecorations="{x:Null}" />
                 <TextBlock
-                    
-                    Grid.Row="1"
-                    HorizontalAlignment="Center"
+                     Margin="20,0"
+                    Grid.Row="4"
+                    HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     FontFamily="/Fonts/#Trajan Pro 3"
-                    FontSize="20"
+                    FontSize="14"
                     Foreground="White"
                     Text="{Binding UpdateName}"
                     TextDecorations="{x:Null}" />
-                <TextBlock
-                    
-                    Grid.Row="2"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontFamily="/Fonts/#Trajan Pro 3"
-                    FontSize="20"
-                    Foreground="White"
-                    Text="{Binding Downloaded}"
-                    TextDecorations="{x:Null}" />
+
 
 
                 <ProgressBar
-                    Grid.Row="3"
-                    Width="520"
+                    Grid.Row="5"
+                    
                     Height="32"
+                    Margin="20"
                     Background="Gray"
                     BorderBrush="Gold"
                     Foreground="Cyan"

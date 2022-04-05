@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Replay Manager"
-#define MyAppVersion "0.0.4"
+#define MyAppVersion "0.0.5"
 #define MyAppPublisher "VladTheJunior"
 #define MyAppExeName "ReplayManagerUpdater.exe"
 #define MyAppMainExeName "ReplayManager.exe"
@@ -43,7 +43,6 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "publish\Release\net6.0-windows\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "publish\Release\net6.0-windows\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "publish\Release\net6.0-windows\ReplayManager.deps.json"; DestDir: "{app}"; Flags: ignoreversion
 Source: "publish\Release\net6.0-windows\ReplayManager.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "publish\Release\net6.0-windows\ReplayManager.exe"; DestDir: "{app}"; Flags: ignoreversion
@@ -54,7 +53,9 @@ Source: "publish\Release\net6.0-windows\ReplayManagerUpdater.dll"; DestDir: "{ap
 Source: "publish\Release\net6.0-windows\ReplayManagerUpdater.pdb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "publish\Release\net6.0-windows\ReplayManagerUpdater.runtimeconfig.json"; DestDir: "{app}"; Flags: ignoreversion
 Source: "publish\Release\net6.0-windows\data\*"; DestDir: "{app}\data"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "publish\netcorecheck_x64.exe"; DestDir: "{tmp}"
 Source: "publish\netcorecheck.exe"; DestDir: "{tmp}"
+Source: "publish\windowsdesktop-runtime-6.0.3-win-x64.exe"; DestDir: "{tmp}"
 Source: "publish\windowsdesktop-runtime-6.0.3-win-x86.exe"; DestDir: "{tmp}"
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -71,11 +72,12 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "{tmp}\windowsdesktop-runtime-6.0.3-win-x86.exe"; Flags: runascurrentuser skipifdoesntexist; Check: NotIsNetCoreInstalled('Microsoft.NETCore.App 6.0.3')
+Filename: "{tmp}\windowsdesktop-runtime-6.0.3-win-x86.exe"; Flags: runascurrentuser skipifdoesntexist; Check: (not IsWin64) and NotIsNetCoreInstalled86('Microsoft.NETCore.App 6.0.3')
+Filename: "{tmp}\windowsdesktop-runtime-6.0.3-win-x64.exe"; Flags: runascurrentuser skipifdoesntexist; Check: IsWin64 and NotIsNetCoreInstalled64('Microsoft.NETCore.App 6.0.3')
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: runascurrentuser nowait postinstall skipifsilent
 
 [Code]
-function NotIsNetCoreInstalled(const Version: String): Boolean;
+function NotIsNetCoreInstalled86(const Version: String): Boolean;
 var
   ResultCode: Integer;
 begin
@@ -83,5 +85,16 @@ begin
     ExtractTemporaryFile('netcorecheck.exe');
   end;
   Result := ShellExec('', ExpandConstant('{tmp}{\}') + 'netcorecheck.exe', Version, '', SW_HIDE, ewWaitUntilTerminated, ResultCode) and (ResultCode = 0);
+  Result := not Result;
+ end;
+
+function NotIsNetCoreInstalled64(const Version: String): Boolean;
+var
+  ResultCode: Integer;
+begin
+  if not FileExists(ExpandConstant('{tmp}{\}') + 'netcorecheck_x64.exe') then begin
+    ExtractTemporaryFile('netcorecheck_x64.exe');
+  end;
+  Result := ShellExec('', ExpandConstant('{tmp}{\}') + 'netcorecheck_x64.exe', Version, '', SW_HIDE, ewWaitUntilTerminated, ResultCode) and (ResultCode = 0);
   Result := not Result;
  end;

@@ -5,18 +5,13 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Version>0.0.4</Version>
+    <Version>0.0.5</Version>
     <Authors>VladTheJunior</Authors>
     <Company>VladTheJunior</Company>
     <Copyright>VladTheJunior</Copyright>
     <BaseOutputPath>..\publish\</BaseOutputPath>
     <ApplicationIcon>game-age3.ico</ApplicationIcon>
   </PropertyGroup>
-
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Fonts\Trajan.ttf" />
@@ -42,10 +37,6 @@
 
 	<ItemGroup>
 	  <Content Include="game-age3.ico" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
 
 

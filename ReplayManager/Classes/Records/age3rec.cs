@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using ReplayManager.Classes.XMLFormalization;
+﻿using ReplayManager.Classes.XMLFormalization;
 using Resource_Manager.Classes.L33TZip;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -199,6 +199,7 @@ namespace ReplayManager.Classes.Records
                 var map_name = GameFileName.ToLower();
                 map_name = map_name.Replace("large", "");
                 map_name = map_name.Replace(" ", "_");
+                map_name = map_name.Replace("minasgerais", "minas_gerais");
                 map_name = map_name.Replace("af_", "af");
                 map_name = map_name.Replace("af", "af_");
 
@@ -1167,11 +1168,11 @@ namespace ReplayManager.Classes.Records
                 List<ProtoData> UnitDatas;
                 RecordPath = path;
                 var json = await File.ReadAllTextAsync(Path.Combine(AppContext.BaseDirectory, "data", "Decks.txt"));
-                DeckDatas = JsonConvert.DeserializeObject<List<DeckData>>(json);
+                DeckDatas = JsonSerializer.Deserialize<List<DeckData>>(json);
                 json = await File.ReadAllTextAsync(Path.Combine(AppContext.BaseDirectory, "data", "Techs.txt"));
-                TechDatas = JsonConvert.DeserializeObject<List<TechData>>(json);
+                TechDatas = JsonSerializer.Deserialize<List<TechData>>(json);
                 json = await File.ReadAllTextAsync(Path.Combine(AppContext.BaseDirectory, "data", "Units.txt"));
-                UnitDatas = JsonConvert.DeserializeObject<List<ProtoData>>(json);
+                UnitDatas = JsonSerializer.Deserialize<List<ProtoData>>(json);
 
                 Versions.Add(new GameVersion() { ExeVersion = 132912, PatchVersion = "0", PatchNotes = "", ReleaseDate = new DateOnly(2020, 10, 13) });
                 Versions.Add(new GameVersion() { ExeVersion = 132601, PatchVersion = "1529", PatchNotes = "https://steamcommunity.com/games/933110/announcements/detail/5409345509730843359", ReleaseDate = new DateOnly(2020, 10, 16) });
@@ -1206,8 +1207,9 @@ namespace ReplayManager.Classes.Records
                 Versions.Add(new GameVersion() { ExeVersion = 194071, PatchVersion = "62999", PatchNotes = "https://www.ageofempires.com/news/age-of-empires-iii-definitive-edition-update-61213/#Hotfix", ReleaseDate = new DateOnly(2022, 2, 14) });
                 Versions.Add(new GameVersion() { ExeVersion = 194799, PatchVersion = "63727", PatchNotes = "https://www.ageofempires.com/news/age-of-empires-iii-definitive-edition-update-61213/#Hotfix-63727", ReleaseDate = new DateOnly(2022, 2, 18) });
                 Versions.Add(new GameVersion() { ExeVersion = 197298, PatchVersion = "13.690", PatchNotes = "https://www.ageofempires.com/news/age_of_empires_iii_de_update_13_690/", ReleaseDate = new DateOnly(2022, 3, 15) });
+                Versions.Add(new GameVersion() { ExeVersion = 199293, PatchVersion = "13.2685", PatchNotes = "https://www.ageofempires.com/news/age_of_empires_iii_de_update_13_690/#Hotfix-132685", ReleaseDate = new DateOnly(2022, 4, 4) });
 
-                
+            
 
                 var data = await File.ReadAllBytesAsync(path);
                 // decoding l33t
@@ -2491,9 +2493,15 @@ namespace ReplayManager.Classes.Records
                                     Reader.ReadBytes(16);
                                     actions.Add(new GameAction() { Duration = duration, Player = Players.FirstOrDefault(x => x.id == playerId), Type = "unknown", Message = "unknown25" });
                                 }
+                                else if (commandId == 73)
+                                {
+                                    actions.Add(new GameAction() { Duration = duration, Player = Players.FirstOrDefault(x => x.id == playerId), Type = "unknown", Message = "unknown26" });
+                                }
                                 else
                                 {
+                                    //Debug.WriteLine(Reader.BaseStream.Position);
                                     throw new Exception($"Unknown command: {commandId}");
+                                    
                                 }
                             }
 
