@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Replay Manager"
-#define MyAppVersion "0.0.5"
+#define MyAppVersion "0.0.6"
 #define MyAppPublisher "VladTheJunior"
 #define MyAppExeName "ReplayManagerUpdater.exe"
 #define MyAppMainExeName "ReplayManager.exe"

@@ -61,7 +61,7 @@
                             FontSize="24"
                             FontWeight="Bold"
                             Foreground="{StaticResource ButtonTextGradient}"
-                            Text="Replay Manager v0.0.5">
+                            Text="Replay Manager v0.0.6">
                     <TextBlock.Effect>
                         <DropShadowEffect
                                     BlurRadius="3"

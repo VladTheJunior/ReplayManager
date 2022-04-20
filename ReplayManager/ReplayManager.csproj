@@ -8,7 +8,7 @@
     <ApplicationIcon>game-age3.ico</ApplicationIcon>
     <Authors>VladTheJunior</Authors>
     <Copyright>VladTheJunior</Copyright>
-    <Version>0.0.5</Version>
+    <Version>0.0.6</Version>
 	  <BaseOutputPath>..\publish\</BaseOutputPath>
 	  <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -22,6 +22,12 @@
     <None Remove="data\avatars\avatar_event0_54.png" />
     <None Remove="data\avatars\avatar_event0_55.png" />
     <None Remove="data\avatars\avatar_event0_56.png" />
+    <None Remove="data\avatars\avatar_event0_57.png" />
+    <None Remove="data\avatars\avatar_event0_58.png" />
+    <None Remove="data\avatars\avatar_event0_59.png" />
+    <None Remove="data\avatars\avatar_event0_60.png" />
+    <None Remove="data\avatars\avatar_event0_61.png" />
+    <None Remove="data\avatars\avatar_event0_62.png" />
     <None Remove="data\cards\greenwich_time.png" />
     <None Remove="data\cards\hc_cav_archer_icon.png" />
     <None Remove="data\cards\hc_crossbow_icon.png" />
@@ -29,15 +35,26 @@
     <None Remove="data\cards\hc_grenadier_icon.png" />
     <None Remove="data\cards\hc_halberdier_icon.png" />
     <None Remove="data\cards\hc_highlander_icon.png" />
+    <None Remove="data\cards\hc_lancer_icon.png" />
     <None Remove="data\cards\hc_light_cavalry_icon.png" />
     <None Remove="data\cards\hc_longbow_icon.png" />
     <None Remove="data\cards\hc_musketeer_icon.png" />
     <None Remove="data\cards\hc_pikeman_icon.png" />
+    <None Remove="data\cards\hc_redolero_icon.png" />
     <None Remove="data\cards\hc_skirmisher_icon.png" />
     <None Remove="data\cards\infinite_battleship.png" />
+    <None Remove="data\cards\infinite_lancer.png" />
     <None Remove="data\cards\infinite_longbow.png" />
+    <None Remove="data\cards\marvelous_year.png" />
+    <None Remove="data\cards\new_spain.png" />
+    <None Remove="data\cards\nuestras_senoras.png" />
+    <None Remove="data\cards\peninsular_guerrillas.png" />
     <None Remove="data\cards\rangers.png" />
+    <None Remove="data\cards\reconquista.png" />
     <None Remove="data\cards\siege_archery.png" />
+    <None Remove="data\cards\team_falconet.png" />
+    <None Remove="data\cards\team_heavy_cannon.png" />
+    <None Remove="data\cards\trastamara.png" />
     <None Remove="data\maps\arabia_mini.png" />
     <None Remove="data\maps\congo_basin_mini.png" />
     <None Remove="data\maps\saharan_routes_lost_mini.png" />
@@ -55,6 +72,12 @@
     <Resource Include="data\avatars\avatar_event0_54.png" />
     <Resource Include="data\avatars\avatar_event0_55.png" />
     <Resource Include="data\avatars\avatar_event0_56.png" />
+    <Resource Include="data\avatars\avatar_event0_57.png" />
+    <Resource Include="data\avatars\avatar_event0_58.png" />
+    <Resource Include="data\avatars\avatar_event0_59.png" />
+    <Resource Include="data\avatars\avatar_event0_60.png" />
+    <Resource Include="data\avatars\avatar_event0_61.png" />
+    <Resource Include="data\avatars\avatar_event0_62.png" />
     <Resource Include="data\cards\greenwich_time.png" />
     <Resource Include="data\cards\hc_cav_archer_icon.png" />
     <Resource Include="data\cards\hc_crossbow_icon.png" />
@@ -62,15 +85,26 @@
     <Resource Include="data\cards\hc_grenadier_icon.png" />
     <Resource Include="data\cards\hc_halberdier_icon.png" />
     <Resource Include="data\cards\hc_highlander_icon.png" />
+    <Resource Include="data\cards\hc_lancer_icon.png" />
     <Resource Include="data\cards\hc_light_cavalry_icon.png" />
     <Resource Include="data\cards\hc_longbow_icon.png" />
     <Resource Include="data\cards\hc_musketeer_icon.png" />
     <Resource Include="data\cards\hc_pikeman_icon.png" />
+    <Resource Include="data\cards\hc_redolero_icon.png" />
     <Resource Include="data\cards\hc_skirmisher_icon.png" />
     <Resource Include="data\cards\infinite_battleship.png" />
+    <Resource Include="data\cards\infinite_lancer.png" />
     <Resource Include="data\cards\infinite_longbow.png" />
+    <Resource Include="data\cards\marvelous_year.png" />
+    <Resource Include="data\cards\new_spain.png" />
+    <Resource Include="data\cards\nuestras_senoras.png" />
+    <Resource Include="data\cards\peninsular_guerrillas.png" />
     <Resource Include="data\cards\rangers.png" />
+    <Resource Include="data\cards\reconquista.png" />
     <Resource Include="data\cards\siege_archery.png" />
+    <Resource Include="data\cards\team_falconet.png" />
+    <Resource Include="data\cards\team_heavy_cannon.png" />
+    <Resource Include="data\cards\trastamara.png" />
     <Resource Include="data\maps\arabia_mini.png" />
     <Resource Include="data\maps\congo_basin_mini.png" />
     <Resource Include="data\maps\saharan_routes_lost_mini.png" />

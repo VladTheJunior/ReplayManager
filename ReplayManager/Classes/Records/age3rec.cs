@@ -1208,8 +1208,9 @@ namespace ReplayManager.Classes.Records
                 Versions.Add(new GameVersion() { ExeVersion = 194799, PatchVersion = "63727", PatchNotes = "https://www.ageofempires.com/news/age-of-empires-iii-definitive-edition-update-61213/#Hotfix-63727", ReleaseDate = new DateOnly(2022, 2, 18) });
                 Versions.Add(new GameVersion() { ExeVersion = 197298, PatchVersion = "13.690", PatchNotes = "https://www.ageofempires.com/news/age_of_empires_iii_de_update_13_690/", ReleaseDate = new DateOnly(2022, 3, 15) });
                 Versions.Add(new GameVersion() { ExeVersion = 199293, PatchVersion = "13.2685", PatchNotes = "https://www.ageofempires.com/news/age_of_empires_iii_de_update_13_690/#Hotfix-132685", ReleaseDate = new DateOnly(2022, 4, 4) });
+                Versions.Add(new GameVersion() { ExeVersion = 201020, PatchVersion = "13.4412", PatchNotes = "https://www.ageofempires.com/news/age-of-empires-iii-de-update-13-4412/", ReleaseDate = new DateOnly(2022, 4, 19) });
 
-            
+
 
                 var data = await File.ReadAllBytesAsync(path);
                 // decoding l33t

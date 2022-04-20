@@ -12,6 +12,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -121,41 +123,8 @@ namespace ReplayManager
             DataContext = this;
             var myCur = Application.GetResourceStream(new Uri("pack://application:,,,/resources/Cursor.cur")).Stream;
             Cursor = new Cursor(myCur);
-            /*
-                        FXML.GenerateUnitsFile(@"C:\Users\vladt\Desktop\Формализация данных\stringtabley.xml",
-                                         @"C:\Users\vladt\Desktop\Формализация данных\protoy.xml");
-                        FXML.GenerateTechsFile(@"C:\Users\vladt\Desktop\Формализация данных\stringtabley.xml",
-                            @"C:\Users\vladt\Desktop\Формализация данных\techtreey.xml");
-                        FXML.GenerateDecksFile(@"C:\Users\vladt\Desktop\Формализация данных\stringtabley.xml",
-                            @"C:\Users\vladt\Desktop\Формализация данных\techtreey.xml", new List<string>() {
-                                     @"C:\Users\vladt\Desktop\Формализация данных\homecityxpsioux.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecityamericans.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecitybritish.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecitychinese.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecitydeinca.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecitydutch.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecityethiopians.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecityfrench.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecitygerman.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecityhausa.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecityindians.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecityjapanese.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecitymexicans.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecityottomans.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecityportuguese.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecityrussians.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecityspanish.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecityswedish.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecityxpaztec.xml",
-                         @"C:\Users\vladt\Desktop\Формализация данных\homecityxpiroquois.xml", });
-
-
-                        var json = File.ReadAllText("data/Decks.txt");
-                        var Decks = JsonConvert.DeserializeObject<List<DeckData>>(json);
-                        List<string> icons = new List<string>();
-                        Decks.ForEach(d => { icons.AddRange(d.Cards.Select(x => x.Icon)); });
-
-                        File.WriteAllLines("icons.txt", icons.Distinct().ToList());*/
+            
+                 
         }
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
@@ -385,6 +354,41 @@ string filename)
             var pipe = new SingleInstanceApp();
             pipe.ReceiveLine += OnReceiveLine;
             await pipe.StartServer("ReplayManager");
+/*
+            await FXML.GenerateUnitsFile(@"C:\Users\vladt\Desktop\Projects\Формализация данных\stringtabley.xml",
+                                  @"C:\Users\vladt\Desktop\Projects\Формализация данных\protoy.xml");
+            await FXML.GenerateTechsFile(@"C:\Users\vladt\Desktop\Projects\Формализация данных\stringtabley.xml",
+                @"C:\Users\vladt\Desktop\Projects\Формализация данных\techtreey.xml");
+            await FXML.GenerateDecksFile(@"C:\Users\vladt\Desktop\Projects\Формализация данных\stringtabley.xml",
+                @"C:\Users\vladt\Desktop\Projects\Формализация данных\techtreey.xml", new List<string>() {
+                                     @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecityxpsioux.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecityamericans.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecitybritish.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecitychinese.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecitydeinca.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecitydutch.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecityethiopians.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecityfrench.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecitygerman.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecityhausa.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecityindians.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecityjapanese.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecitymexicans.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecityottomans.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecityportuguese.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecityrussians.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecityspanish.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecityswedish.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecityxpaztec.xml",
+                         @"C:\Users\vladt\Desktop\Projects\Формализация данных\homecityxpiroquois.xml", });
+
+
+            var json = File.ReadAllText("Decks.txt");
+            var Decks = JsonSerializer.Deserialize<List<DeckData>>(json);
+            List<string> icons = new List<string>();
+            Decks.ForEach(d => { icons.AddRange(d.Cards.Select(x => x.Icon)); });
+
+            File.WriteAllLines("icons.txt", icons.Distinct().ToList());*/
         }
     }
 
