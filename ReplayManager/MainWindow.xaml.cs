@@ -63,11 +63,42 @@ namespace ReplayManager
 
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private bool isSharing = true;
+
+        public bool IsSharing
+        {
+            get
+            {
+                return isSharing;
+            }
+            set
+            {
+                isSharing = value;
+                NotifyPropertyChanged();
+                Settings.Default.IsSharing = value;
+                Settings.Default.Save();
+            }
+        }
+
+        private age3rec selectedRecord;
+
+        public age3rec SelectedRecord
+        {
+            get
+            {
+                return selectedRecord;
+            }
+            set
+            {
+                selectedRecord = value;
+                NotifyPropertyChanged();
+            }
         }
 
         public ObservableCollection<age3rec> Records { get; set; } = new ObservableCollection<age3rec>();
@@ -116,6 +147,7 @@ namespace ReplayManager
             });
         }
 
+        int Version = 7;
         public MainWindow()
         {
             Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(Timeline), new FrameworkPropertyMetadata { DefaultValue = 20 });
@@ -123,8 +155,24 @@ namespace ReplayManager
             DataContext = this;
             var myCur = Application.GetResourceStream(new Uri("pack://application:,,,/resources/Cursor.cur")).Stream;
             Cursor = new Cursor(myCur);
-            
-                 
+            IsSharing = Settings.Default.IsSharing;
+            if (File.Exists(Path.Combine(AppContext.BaseDirectory, "UpdateCounter.txt")))
+            {
+                int counter = Convert.ToInt32(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "UpdateCounter.txt")));
+                if (counter < Version)
+                {
+                    File.WriteAllText(Path.Combine(AppContext.BaseDirectory, "UpdateCounter.txt"), Version.ToString());
+                    ReleaseNotes window = new();
+                    window.ShowDialog();
+                }
+            }
+            else
+            {
+                File.WriteAllText(Path.Combine(AppContext.BaseDirectory, "UpdateCounter.txt"), Version.ToString());
+                ReleaseNotes window = new ReleaseNotes();
+                window.ShowDialog();
+            }
+
         }
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
@@ -183,7 +231,7 @@ string filename)
             });
             Process.Start(new ProcessStartInfo()
             {
-                FileName = Path.Combine(Environment.CurrentDirectory, filename),
+                FileName = Path.Combine(AppContext.BaseDirectory, filename),
                 UseShellExecute = true,
                 Verb = "open"
             });
@@ -390,6 +438,43 @@ string filename)
 
             File.WriteAllLines("icons.txt", icons.Distinct().ToList());*/
         }
+
+        private void bHome_Click(object sender, RoutedEventArgs e)
+        {
+            bHome.IsEnabled = false;
+            tbRecords.Visibility = Visibility.Visible;
+            tiSelectedRecord.Visibility = Visibility.Hidden;
+        }
+
+        
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            SelectedRecord = Records.FirstOrDefault(x => x.RecordPath == (sender as Button).Tag.ToString());
+            if (SelectedRecord != null)
+            {
+                bHome.IsEnabled = true;
+                tbRecords.Visibility = Visibility.Hidden;
+                tiSelectedRecord.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            string targetURL = "https://docs.google.com/forms/d/e/1FAIpQLSeuse41TfYZ2rrqw2O92XVMGQMchSQSOwuHGWdATrIezPEYqw/viewform?usp=sf_link";
+            var psi = new ProcessStartInfo
+            {
+                FileName = targetURL,
+                UseShellExecute = true
+            };
+            Process.Start(psi);
+        }
+
+        private void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            ReleaseNotes window = new ReleaseNotes();
+            window.ShowDialog();
+        }
     }
 
     public class StringToColorConverter : IValueConverter
@@ -423,7 +508,6 @@ string filename)
                 return Visibility.Collapsed;
             }
 
-            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -431,7 +515,27 @@ string filename)
             return null;
         }
     }
+    public class MultiplyConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType,
+               object parameter, CultureInfo culture)
+        {
+            double result = 1.0;
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (values[i] is double)
+                    result *= (double)values[i];
+            }
 
+            return result;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes,
+               object parameter, CultureInfo culture)
+        {
+            throw new Exception("Not implemented");
+        }
+    }
     public class AmountToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -445,7 +549,6 @@ string filename)
                 return Visibility.Collapsed;
             }
 
-            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

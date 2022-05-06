@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Version>0.0.6</Version>
+    <Version>0.0.7</Version>
     <Authors>VladTheJunior</Authors>
     <Company>VladTheJunior</Company>
     <Copyright>VladTheJunior</Copyright>
@@ -37,6 +37,11 @@
 
 	<ItemGroup>
 	  <Content Include="game-age3.ico" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <PackageReference Include="K4os.Hash.xxHash" Version="1.0.7" />
 	</ItemGroup>
 
 

@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Replay Manager"
-#define MyAppVersion "0.0.6"
+#define MyAppVersion "0.0.7"
 #define MyAppPublisher "VladTheJunior"
 #define MyAppExeName "ReplayManagerUpdater.exe"
 #define MyAppMainExeName "ReplayManager.exe"
@@ -44,6 +44,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "publish\Release\net6.0-windows\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "publish\Release\net6.0-windows\ReplayManager.deps.json"; DestDir: "{app}"; Flags: ignoreversion
+Source: "publish\Release\net6.0-windows\K4os.Hash.xxHash.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "publish\Release\net6.0-windows\ReplayManager.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "publish\Release\net6.0-windows\ReplayManager.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "publish\Release\net6.0-windows\ReplayManager.pdb"; DestDir: "{app}"; Flags: ignoreversion

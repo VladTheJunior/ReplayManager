@@ -88,7 +88,7 @@ namespace ReplayManager.Classes.XMLFormalization
                     {
                         var name = xnode.SelectSingleNode("name")?.InnerText;
                         var age = Convert.ToInt32(xnode.SelectSingleNode("age")?.InnerText);
-                        var max_count = xnode.SelectSingleNode("maxcount")?.InnerText.Replace("-1", "∞").Replace("2", "2x");
+                        var max_count = Convert.ToInt32(xnode.SelectSingleNode("maxcount")?.InnerText);
                         var display_count = xnode.SelectSingleNode("displayunitcount")?.InnerText;
 
                         for (int i = 0; i < TechXML.DocumentElement.ChildNodes.Count; i++)
@@ -103,7 +103,7 @@ namespace ReplayManager.Classes.XMLFormalization
                                     var dname = StringsXML.DocumentElement.SelectSingleNode($"language/string[@_locid='{dname_id}']").InnerText;
                                     var rname = StringsXML.DocumentElement.SelectSingleNode($"language/string[@_locid='{rname_id}']");
                                     var rollname = rname != null ? rname?.InnerText : null;
-                                    CardData CardData = new CardData() { Age = age, CardID = i, MaxCount = max_count, DisplayCount = display_count, CardName = name, DisplayName = dname, Icon = icon, RolloverText = rollname };
+                                    CardData CardData = new CardData() { Age = age, CardID = i, maxCount = max_count, DisplayCount = display_count, CardName = name, DisplayName = dname, Icon = icon, RolloverText = rollname };
                                     Cards.Add(CardData);
                                 }
                                 break;

@@ -80,6 +80,14 @@ namespace ReplayManager.Classes.Records
             }
         }
 
+        public int RecordOwnerID
+        {
+            get
+            {
+                return ViewPoint - 1;
+            }
+        }
+
         private string exeInfo = "";
         public string ExeInfo
         {
@@ -200,6 +208,10 @@ namespace ReplayManager.Classes.Records
                 map_name = map_name.Replace("large", "");
                 map_name = map_name.Replace(" ", "_");
                 map_name = map_name.Replace("minasgerais", "minas_gerais");
+                map_name = map_name.Replace("niger_delta", "nigerdelta");
+                map_name = map_name.Replace("nile_valley", "nilevalley");
+                map_name = map_name.Replace("gold_coast", "goldcoast");
+                map_name = map_name.Replace("afsahel", "sahel");
                 map_name = map_name.Replace("af_", "af");
                 map_name = map_name.Replace("af", "af_");
 
@@ -478,7 +490,7 @@ namespace ReplayManager.Classes.Records
             {
                 if (GameNumPlayers == 2)
                 {
-                    string name =  $"[{ShortGameModeType}] {Players[0].name}[{Players[0].GameCiv.short_name}] vs {Players[1].name}[{Players[1].GameCiv.short_name}] - {GameFileName}.age3yrec";
+                    string name = $"[{ShortGameModeType}] {Players[0].name}[{Players[0].GameCiv.short_name}] vs {Players[1].name}[{Players[1].GameCiv.short_name}] - {GameFileName}.age3yrec";
                     return string.Join("_", name.Split(Path.GetInvalidFileNameChars()));
                 }
                 else
@@ -486,7 +498,7 @@ namespace ReplayManager.Classes.Records
                     string name = $"[{ShortGameModeType}] ";
                     foreach (GamePlayer player in Players)
                     {
-                        name+= $"{player.name}[{player.GameCiv.short_name}], ";
+                        name += $"{player.name}[{player.GameCiv.short_name}], ";
 
                     }
                     name = name.Remove(name.Length - 2);
@@ -1209,7 +1221,7 @@ namespace ReplayManager.Classes.Records
                 Versions.Add(new GameVersion() { ExeVersion = 197298, PatchVersion = "13.690", PatchNotes = "https://www.ageofempires.com/news/age_of_empires_iii_de_update_13_690/", ReleaseDate = new DateOnly(2022, 3, 15) });
                 Versions.Add(new GameVersion() { ExeVersion = 199293, PatchVersion = "13.2685", PatchNotes = "https://www.ageofempires.com/news/age_of_empires_iii_de_update_13_690/#Hotfix-132685", ReleaseDate = new DateOnly(2022, 4, 4) });
                 Versions.Add(new GameVersion() { ExeVersion = 201020, PatchVersion = "13.4412", PatchNotes = "https://www.ageofempires.com/news/age-of-empires-iii-de-update-13-4412/", ReleaseDate = new DateOnly(2022, 4, 19) });
-
+                Versions.Add(new GameVersion() { ExeVersion = 201696, PatchVersion = "13.5088", PatchNotes = "https://www.ageofempires.com/news/age-of-empires-iii-de-update-13-4412/#Hotfix-135088-", ReleaseDate = new DateOnly(2022, 4, 26) });
 
 
                 var data = await File.ReadAllBytesAsync(path);
@@ -1516,7 +1528,38 @@ namespace ReplayManager.Classes.Records
                 }
 
 
+                // Read Player Teams
+                var playersWithoutTeam = gameNumPlayers;
+                bufOffset = Search(data, 0, new byte[] { 0x54, 0x45 });
+                while (bufOffset != -1)
+                {
+                    Reader.BaseStream.Seek(bufOffset + 2, SeekOrigin.Begin);
+                    Reader.ReadInt32();
+                    var key = Reader.ReadInt32();
+                    if (key == 12)
+                    {
+                        var teamId = Reader.ReadInt32();
+                        bufLength = Reader.ReadInt32();
 
+                        var teamName = Encoding.Unicode.GetString(Reader.ReadBytes(bufLength * 2));
+                        var teamMembersCount = Reader.ReadInt32();
+                        for (int i = 0; i < teamMembersCount; i++)
+                        {
+                            var playerId = Reader.ReadInt32();
+                            playersWithoutTeam--;
+                            var player = Players.FirstOrDefault(x => x.id == playerId);
+                            if (player != null)
+                            {
+                                player.TeamID = teamId;
+                                player.TeamName = teamName;
+                            }
+                        }
+
+                    }
+                    bufOffset = Search(data, (int)Reader.BaseStream.Position, new byte[] { 0x54, 0x45 });
+                }
+                if (playersWithoutTeam > 0)
+                    throw new Exception("Couldnt find all players teams");
                 List<GameAction> actions = new List<GameAction>();
                 actionsCollection = new CollectionViewSource();
 
@@ -2108,6 +2151,7 @@ namespace ReplayManager.Classes.Records
                                     Reader.ReadBytes(4);
 
                                     actions.Add(new GameAction() { Player = Players.FirstOrDefault(x => x.id == playerId), Duration = duration, Type = "resigned", Message = "Player resigned" });
+                                    Players.FirstOrDefault(x => x.id == playerId).IsResigned = true;
                                     //if (ExeVersion >= 154583)
                                     Reader.ReadByte(); // some byte
                                 }
@@ -2464,11 +2508,68 @@ namespace ReplayManager.Classes.Records
                                     ExpectedValue(0, unknown2);
                                     ExpectedValue(4, unknownCount);
                                     int deckId = Reader.ReadInt32();
-                                    Reader.ReadBytes(4);
+                                    int card_id = Reader.ReadInt32();
                                     Players.FirstOrDefault(x => x.id == playerId).SelectedDeckId = deckId;
+                                    Players.FirstOrDefault(x => x.id == playerId).Decks[deckId].IsSelected = true;
+
                                     if (Players.FirstOrDefault(x => x.id == playerId).Decks.Count > 0)
                                     {
-                                        actions.Add(new GameAction() { Player = Players.FirstOrDefault(x => x.id == playerId), Duration = duration, Type = "pick_deck", Message = $"picking deck: {Players.FirstOrDefault(x => x.id == playerId).Decks[deckId].Name}" });
+                                        if (card_id != -1)
+                                        {
+                                            var deck = Players.FirstOrDefault(x => x.id == playerId).Decks[deckId];
+                                            deck.TechIds.Add(card_id);
+
+                                            var deckData = DeckDatas.FirstOrDefault(x => x.CivID == Players.FirstOrDefault(x => x.id == playerId).GameCiv.id);
+                                            if (deckData != null)
+                                            {
+                                                ObservableCollection<CardData> FilledDeck = new ObservableCollection<CardData>();
+                                                foreach (var card in deck.TechIds)
+                                                {
+                                                    var FilledCard = deckData.Cards.FirstOrDefault(x => x.CardID == card);
+                                                    if (FilledCard != null)
+                                                    {
+                                                        FilledDeck.Add(FilledCard);
+                                                    }
+
+                                                }
+
+                                                ObservableCollection<CardData> SortedDeck = new ObservableCollection<CardData>();
+                                                foreach (var tech in deckData.Cards)
+                                                {
+                                                    foreach (var card in FilledDeck)
+                                                    {
+                                                        if (tech.CardName == card.CardName)
+                                                        {
+                                                            SortedDeck.Add(card);
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+
+                                                deck.SortedCards = new ObservableCollection<CardData>(SortedDeck.OrderBy(x => x.Age));
+                                                deck.Age1Cards = new ObservableCollection<CardData>(SortedDeck.Where(x => x.Age == 0));
+                                                deck.Age2Cards = new ObservableCollection<CardData>(SortedDeck.Where(x => x.Age == 1));
+                                                deck.Age3Cards = new ObservableCollection<CardData>(SortedDeck.Where(x => x.Age == 2));
+                                                deck.Age4Cards = new ObservableCollection<CardData>(SortedDeck.Where(x => x.Age == 3));
+
+                                                var picked_card = deckData.Cards.FirstOrDefault(x => x.CardID == card_id);
+                                                if (picked_card != null)
+                                                {
+                                                    actions.Add(new GameAction() { Player = Players.FirstOrDefault(x => x.id == playerId), Duration = duration, Type = "pick_deck", Message = $"picking card \"{picked_card.DisplayName}\" for deck: {Players.FirstOrDefault(x => x.id == playerId).Decks[deckId].Name}" });
+
+                                                }
+                                                else
+                                                {
+                                                    actions.Add(new GameAction() { Player = Players.FirstOrDefault(x => x.id == playerId), Duration = duration, Type = "pick_deck", Message = $"picking card \"{card_id}\" for deck: {Players.FirstOrDefault(x => x.id == playerId).Decks[deckId].Name}" });
+
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            actions.Add(new GameAction() { Player = Players.FirstOrDefault(x => x.id == playerId), Duration = duration, Type = "pick_deck", Message = $"picking deck: {Players.FirstOrDefault(x => x.id == playerId).Decks[deckId].Name}" });
+
+                                        }
                                     }
                                     else
                                     {
@@ -2502,7 +2603,7 @@ namespace ReplayManager.Classes.Records
                                 {
                                     //Debug.WriteLine(Reader.BaseStream.Position);
                                     throw new Exception($"Unknown command: {commandId}");
-                                    
+
                                 }
                             }
 
@@ -2543,6 +2644,7 @@ namespace ReplayManager.Classes.Records
                 actionsCollection.Filter += Filter;
                 foreach (var player in Players)
                 {
+                    
                     player.CPM = actions.Count(x => x.Player.id == player.id) / (actions.Last().Duration / 1000.0 / 60.0);
                 }
 
@@ -2550,6 +2652,29 @@ namespace ReplayManager.Classes.Records
                 for (int i = GameNumPlayers; i < 12; i++)
                 {
                     Players.RemoveAt(GameNumPlayers);
+                }
+                Players[viewPoint-1].IsRecordOwner = true;
+                var playersByTeam = Players.GroupBy(p => p.TeamID);
+
+                var WinnersCount = 0;
+                var WinnersTeam = 0;
+                foreach (var team in playersByTeam)
+                {
+                    var membersCount = team.Count();
+                    var resignedCount = team.Where(x => x.IsResigned).Count();
+                    if (membersCount > resignedCount)
+                    {
+                        WinnersTeam = team.Key;
+                        WinnersCount++;
+                    }
+                }
+
+                if (WinnersCount == 1)
+                {
+                    foreach (var player in Players.Where(p => p.TeamID == WinnersTeam))
+                    {
+                        player.IsWinner = true;
+                    }
                 }
 
                 NotifyPropertyChanged("Players");

@@ -38,7 +38,11 @@ namespace ReplayManager.Classes.Records
         public int SelectedDeckId { get; set; } = -1;
 
         public double CPM { get; set; }
-
+        public int TeamID { get; set; }
+        public string TeamName { get; set; }
+        public bool IsResigned { get; set; }
+        public bool IsWinner { get; set; }
+        public bool IsRecordOwner { get; set; }
 
         public ObservableCollection<PlayerDeck> Decks { get; set; } = new ObservableCollection<PlayerDeck>();
 
@@ -82,18 +86,46 @@ namespace ReplayManager.Classes.Records
             }
         }
 
+        public string StatusIcon
+        {
+            get
+            {
+                if (IsResigned)
+                {
+                    return "pack://application:,,,/resources/icon_kick.png";
+                }
+                else if (IsWinner)
+                {
+                    return "pack://application:,,,/resources/winner.png";
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
+
+        public string OwnerIcon
+        {
+            get
+            {
+                return IsRecordOwner ? "pack://application:,,,/resources/fow_toggle.png" : "";
+            }
+        }
+
         public string Team
         {
             get
             {
-                switch (teamid)
+                return TeamID == 0 ? "" : $"Team {TeamID}";
+                /*switch (teamid)
                 {
                     case 1: return "Team 1";
                     case 2: return "Team 2";
                     case 3: return "Team 3";
                     case 4: return "Team 4";
                     default: return "Team ?";
-                }
+                }*/
             }
         }
 

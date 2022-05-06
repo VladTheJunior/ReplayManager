@@ -8,7 +8,7 @@
     <ApplicationIcon>game-age3.ico</ApplicationIcon>
     <Authors>VladTheJunior</Authors>
     <Copyright>VladTheJunior</Copyright>
-    <Version>0.0.6</Version>
+    <Version>0.0.7</Version>
 	  <BaseOutputPath>..\publish\</BaseOutputPath>
 	  <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -58,7 +58,14 @@
     <None Remove="data\maps\arabia_mini.png" />
     <None Remove="data\maps\congo_basin_mini.png" />
     <None Remove="data\maps\saharan_routes_lost_mini.png" />
+    <None Remove="resources\button_homecity_disabled.png" />
+    <None Remove="resources\button_homecity_hover.png" />
+    <None Remove="resources\button_homecity_normal.png" />
+    <None Remove="resources\fow_toggle.png" />
+    <None Remove="resources\icon_kick.png" />
     <None Remove="resources\rename_icon.png" />
+    <None Remove="resources\resource_xp.png" />
+    <None Remove="resources\winner.png" />
   </ItemGroup>
 
  
@@ -1627,6 +1634,9 @@
     <Resource Include="resources\audio\mouseover_00.wav" />
     <Resource Include="resources\audio\mouseover_02.wav" />
     <Resource Include="resources\audio\smallbutton.wav" />
+    <Resource Include="resources\button_homecity_disabled.png" />
+    <Resource Include="resources\button_homecity_hover.png" />
+    <Resource Include="resources\button_homecity_normal.png" />
     <Resource Include="resources\checkbox_disabled_off.png" />
     <Resource Include="resources\checkbox_disabled_on.png" />
     <Resource Include="resources\checkbox_focused_hollow.png" />
@@ -1637,6 +1647,8 @@
     <Resource Include="resources\close_icon.png" />
     <Resource Include="resources\combo_arrow.png" />
     <Resource Include="resources\Cursor.cur" />
+    <Resource Include="resources\fow_toggle.png" />
+    <Resource Include="resources\icon_kick.png" />
     <Resource Include="resources\images\campaignmenu\campaignselect_textbg.png" />
     <Resource Include="resources\images\campaignmenu\levels\lvlcard_mask.png" />
     <Resource Include="resources\images\hud\hud_chat_combobox.png" />
@@ -1647,7 +1659,16 @@
     <Resource Include="resources\loadingspinner.png" />
     <Resource Include="resources\rename_icon.png" />
     <Resource Include="resources\titlebar_tile.png" />
+    <Resource Include="resources\winner.png" />
     <Resource Include="resources\wood.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -1659,6 +1680,10 @@
     </None>
     <None Update="data\Units.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
