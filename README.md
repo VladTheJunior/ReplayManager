@@ -17,10 +17,10 @@
 *Tool to viewing Age of Empires III: Definitive Edition records*
 
 **Developer:** VladTheJunior<br />
-**Current version:** 0.0.6<br />
+**Current version:** 0.0.7<br />
 
 [Download Portable](https://github.com/VladTheJunior/ReplayManager/releases/latest/download/ReplayManager.zip)<br />
-[Download Installer from Google Drive](https://drive.google.com/file/d/14HsBe9i282aTYwI2t4AFsPCvMESjRFwn/view?usp=sharing)<br />
+[Download Installer from Google Drive](https://drive.google.com/file/d/15GlOxKEG6vF7SpnkkswF-y7cW-Ftc0H9/view?usp=sharing)<br />
 
 *__Note:__ Portable version may require .NET6 desktop runtime: https://dotnet.microsoft.com/en-us/download/dotnet/6.0*
 
