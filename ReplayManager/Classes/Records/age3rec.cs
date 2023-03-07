@@ -1,4 +1,4 @@
-﻿using ReplayManager.Classes.XMLFormalization;
+using ReplayManager.Classes.XMLFormalization;
 using Resource_Manager.Classes.L33TZip;
 using System;
 using System.Collections.Generic;
@@ -1234,7 +1234,7 @@ namespace ReplayManager.Classes.Records
                 Reader = new BinaryReader(stream);
                 MagicNumber = Reader.ReadByte();
 
-                if (MagicNumber != 4)
+                if (MagicNumber != 4 && MagicNumber != 5)
                 {
                     throw new Exception("File is not Age of Empires 3: DE record file");
                 }
@@ -1272,6 +1272,10 @@ namespace ReplayManager.Classes.Records
                 else if (ExeVersion < 154583)
                 {
                     Reader.ReadBytes(40);
+                }
+                else if (ExeVersion >= 226593)
+                {
+                    Reader.ReadBytes(60);
                 }
                 else
                 {
@@ -1361,11 +1365,6 @@ namespace ReplayManager.Classes.Records
                 ReadGamePlayers();
 
 
-
-
-
-
-
                 ReadGameInfoString("gameguid");
                 ReadGameInfoString("gamecontinuemainfilename");
                 ReadGameInfoString("gamecontinuecampaignfilename");
@@ -1394,6 +1393,23 @@ namespace ReplayManager.Classes.Records
                     ReadGameInfoInt32("mapmodcrc");
                     ReadGameInfoInt32("gamempcoopcampaignid");
                     ReadGameInfoInt32("gamempcoopscenarioid");
+                }
+                if (ExeVersion >= 226593)
+                {
+
+                    ReadGameInfoInt32("gameeconomymoderules");
+                    ReadGameInfoBool("gameteamvictory");
+                    ReadGameInfoBool("gameonevsall");
+                    ReadGameInfoBool("gamemaprecommendedsettings");
+
+
+                    ReadGameInfoBool("usedenforcedagesettings");
+                    ReadGameInfoBool("gameeconomypackages");
+                    ReadGameInfoBool("gameeconomychallenges");
+                    ReadGameInfoBool("gameeconomyvictory");
+
+                    ReadGameInfoBool("gameeconomyceasefire");
+
                 }
 
                 var bufOffset = Search(data, 0, new byte[] { 0x44, 0x6b });
@@ -1583,6 +1599,10 @@ namespace ReplayManager.Classes.Records
                     var msg = Encoding.Unicode.GetString(Reader.ReadBytes(bufLength * 2));
                     actions.Add(new GameAction() { Player = Players[sender], Duration = 0, Type = "chat", Message = $"sending message to {Players[reciever].name}: {msg}" });
 
+                    if (ExeVersion >= 226593)
+                    {
+                        Reader.ReadByte();
+                    }
 
                 }
                 long duration = 0;
@@ -1812,6 +1832,11 @@ namespace ReplayManager.Classes.Records
                             bufLength = Reader.ReadInt32();
                             var msg = Encoding.Unicode.GetString(Reader.ReadBytes((int)bufLength * 2));
                             actions.Add(new GameAction() { Player = Players[sender], Duration = duration, Type = "chat", Message = $"sending message to {Players[reciever].name}: {msg}" });
+
+                            if (ExeVersion >= 226593)
+                            {
+                                Reader.ReadByte();
+                            }
                         }
 
 
